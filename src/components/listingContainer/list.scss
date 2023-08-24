@@ -1,0 +1,26 @@
+.projects_hover {
+    position: relative;
+    background-color: var(--container-color);
+    padding: 5px;
+    border-radius: 0.25rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    transition: .3s;
+    width: 135%;
+
+    &:hover {
+        box-shadow: 0px 5px 15px 10px rgba(0, 0, 0, 0.15);
+        z-index: 2;
+    }
+}
+// .slick-list #ForSale{
+//     width: 5.89%;
+//     @media (min-width: 1024px) {
+//         width: 9.8%;
+//     }
+// }
+// #ForSale{
+//     width: 98.7%;
+//     @media (min-width: 1024px) {
+//         width:97.5%;
+//     }
+// }

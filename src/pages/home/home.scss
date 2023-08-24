@@ -1,0 +1,108 @@
+.slick-list {
+    max-width: 400px;
+    min-height: 450px;
+    @media (min-width: 1024px) {
+        max-width: 1500px;
+        min-height: 400px;
+    }
+}
+.slick-slider{
+    display: flex !important;
+    justify-content: center;
+}
+
+.slick-prev:before {
+    color: black !important;
+  }
+  .slick-next:before {
+    color: black !important;
+
+  }
+
+#sliderParent .slick-track{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 3px;
+}
+
+.homeContainer {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: whitesmoke;
+
+    .searchArea {
+        background-position-y: center
+    }
+
+    .ad {
+        background-color: white;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 200px;
+        padding: 80px;
+        gap: 50px;
+
+        .container {
+            // border: 1px solid darkgray;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            justify-content: space-evenly;
+            width: 45%;
+            max-height: 300px;
+            background-color: white;
+
+            .imageContainer {
+                img {
+                    display: flex;
+                    width: 100%;
+                    height: 210px;
+                    padding: 10px;
+                }
+            }
+
+            #verifiedStatus {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+    }
+
+    // .image1 {
+    //     height: 200px;
+    //     // width: 300px;
+    //     margin: 20px;
+    //     background-image: url(https://t3.ftcdn.net/jpg/06/13/31/34/240_F_613313437_ZdvPwQusevrsCIFBP9Fs3333eyQVS34O.jpg);
+    //     background-repeat: no-repeat;
+    //     background-size: auto;
+    //     background-position-x: center;
+    // }
+
+    // .image2 {
+    //     height: 200px;
+    //     // width: 300px;
+    //     margin: 20px;
+    //     background-image: url(https://t3.ftcdn.net/jpg/02/79/95/74/240_F_279957470_BV2RXlN4iI2mFf1uxfHqcR65F07UKCuL.jpg);
+    //     background-repeat: no-repeat;
+    //     background-size: auto;
+    //     background-position-x: center;
+    // }
+
+    // .image3 {
+    //     height: 200px;
+    //     // width: 300px;
+    //     margin: 20px;
+    //     background-image: url(https://t4.ftcdn.net/jpg/06/00/30/77/240_F_600307721_n0GvttOcAACrRSbmHf6rdb4SO73vKmIG.jpg);
+    //     background-repeat: no-repeat;
+    //     background-size: auto;
+    //     background-position-x: center;
+    // }
+}
