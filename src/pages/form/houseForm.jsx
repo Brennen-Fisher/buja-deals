@@ -16,7 +16,7 @@ function HouseForm() {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const [files, setFiles] = useState([]);
-    const [featImg, setFeat] = useState();
+    const [featImg, setFeat] = useState(0);
     let imageUrl =[];
 
     const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
@@ -33,7 +33,7 @@ function HouseForm() {
 
     const swapPositions = (array, from, to) => {
         let temp = [];
-        console.log(array);
+        // console.log(array);
         for (var i = 0; i < array.length; i++) {
             if (i === from) {
                 temp.push(array[to]);
@@ -134,7 +134,7 @@ function HouseForm() {
                         <div className='grid grid-cols-2 gap-[20px] w-[75%] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Price:" : "Entreprise:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='price' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='price' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Style:" : "Entrez le style:"}
@@ -152,7 +152,7 @@ function HouseForm() {
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Year of Contruction:" : "Entrez l'année de construction:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='year' type="text" maxLength="4" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='year' type="number" maxLength="4" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Is this for rent or sale?" : "Est-ce à louer ou à vendre?"}
@@ -169,15 +169,15 @@ function HouseForm() {
                         <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Number of Baths:" : "Entrez le nombre de bains:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='bath' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='bath' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Number of rooms:" : "Entrez le nombre de pièces:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='room' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='room' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Square Footage:" : "Entrez en pieds carrés:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='m2' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='m2' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Lot Size:" : "Entrez la taille du lot:"}

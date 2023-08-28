@@ -17,6 +17,7 @@ import HouseEdit from './pages/edit/houseEdit';
 import CarEdit from './pages/edit/carEdit';
 import HouseForm from './pages/form/houseForm';
 import CarForm from './pages/form/carForm';
+import VerifyForm from './pages/contact/verifyForm';
 
 function App() {
   const [lang, setLang] = useState("En");
@@ -99,6 +100,10 @@ function App() {
         {
           path: "/car-form",
           element: <CarForm />,
+        },
+        {
+          path: "/verify/:id",
+          element: <VerifyForm />,
         },
       ],
     },

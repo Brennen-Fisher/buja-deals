@@ -116,13 +116,13 @@ function ListContainer(props) {
 
     if (lang == "En")
         return (
-            <div key={props} className={'rounded-t-md bg-white max-w-[325px] lg:max-w-full lg:max-h-[450px] lg:min-h-[450px] grid grid-rows-[2fr,1fr] projects_hover wow animated'}>
+            <div key={props} className={'rounded-t-md bg-white max-w-[325px] lg:max-w-[350px] min-[1800px]:max-w-full lg:max-h-[450px] lg:min-h-[450px] grid grid-rows-[2fr,1fr] projects_hover wow animated'}>
                 <div className='h-auto'>
                     <ImageLoader img={props.image[0]} />
                     <div className='relative w-[99%] flex h-full justify-end'>
                         <div id='ForSale' className='h-full'>
                             <div className='hidden lg:block'>
-                                <label className={props.hover ? 'bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded left-[298px]' : 'bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded left-[298px]'}> For {props.sale}</label>
+                                <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded lg:left-[278px] min-[1800px]:left-[298px]'> For {props.sale}</label>
                             </div>
                             <div className='relative lg:hidden block h-full'>
                                 <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded translate-x-[-44%]'> For {props.sale}</label>

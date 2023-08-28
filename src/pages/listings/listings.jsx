@@ -16,7 +16,7 @@ function Listings() {
     const [qWhat, setWhat] = useState();
     const [qSale, setSale] = useState();
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(15);
     const [last, setLast] = useState(false);
     const [qCom, setCom] = useState();
     const [qZone, setZone] = useState();
@@ -285,7 +285,7 @@ function Listings() {
             <div className='overflow-x-hidden flex justify-center w-full bg-[skyblue] min-h-[858px]'>
                 <div>
                     <div className='flex flex-col justify-start'>
-                        <div className='sideBar items-center flex flex-col py-[20px] mr-4 lg:items-start'>
+                        <div className='sideBar items-center flex flex-col py-[20px] mr-4 min-[1800px]:items-start'>
                             <form className='gap-1 lg:flex grid grid-cols-2 lg:flex-row' method='post' id='qForm'>
                                 <div>
                                     <select onInput={changeSale} name="howBuy" id="how">
@@ -395,9 +395,8 @@ function Listings() {
                                     </form>
                                 </div>
                             </div>
-                            <div className='pb-5 lg:min-w-[1875px] items-start flex flex-col w-full'>
-
-                                <div className='grid grid-cols-1 lg:grid-cols-5 h-auto gap-2'>
+                            <div className='pb-5 min-[1800px]:min-w-[1875px] items-start flex flex-col w-full'>
+                                <div className='grid grid-cols-1 lg:grid-cols-3 min-[1800px]:grid-cols-5 h-auto gap-2'>
                                     {data.posts ? data.posts.map((p) => (p.what === "house" ? <ListContainer verified={p.verified} hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} verified={p.verified} />)) : <div className='loading'>Loading..</div>}
                                 </div>
                                 {/** Text Here */}

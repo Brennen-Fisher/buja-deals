@@ -150,10 +150,17 @@ const home = () => {
         autoplay: false,
         responsive: [
             {
+                breakpoint: 1800,
+                settings: {
+                    slidesToShow: 3,
+                    swipeToSlide: true,
+                    infinite: true,
+                }
+            },
+            {
                 breakpoint: 1024,
                 settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1,
                     swipeToSlide: true,
                     infinite: true,
                 }
@@ -180,7 +187,7 @@ const home = () => {
                         <button className={("p-3 rounded-t-md " + (tab3 ? "bg-[skyblue]" : "bg-white"))} name="tablinks" type='button' onClick={() => { setTab1(false); setTab2(false); setTab3(true); }}>Search Cars</button>
                     </div>
                     <div className='flex justify-center p-5 px-20 bg-[skyblue] w-full shadow-lg rounded-md'>
-                        
+
                         <div className={("" + (tab1 ? "flex" : "hidden"))}>
                             <form onSubmit={handleSubmit}>
                                 <div className='flex flex-col gap-5'>
@@ -360,7 +367,7 @@ const home = () => {
                         </div>
 
                         <div className={("" + (tab3 ? "flex" : "hidden"))}>
-                        <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit}>
                                 <div className='flex flex-col gap-5'>
                                     <div className='flex flex-col lg:flex-row gap-3'>
                                         <span className='grid grid-cols-2 lg:flex [&>div]:items-center lg:flex-row gap-x-3'>

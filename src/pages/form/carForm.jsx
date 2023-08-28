@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react'
 import './form.scss';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { db, storage } from "../../firebase";
+import { storage } from "../../firebase";
 import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router';
 import newRequest from '../../utils/newRequest';
@@ -16,9 +16,10 @@ function CarForm() {
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     let imageUrl = [];
+
     const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
     const [files, setFiles] = useState([]);
-    const [featImg, setFeat] = useState();
+    const [featImg, setFeat] = useState(0);
 
     const queryClient = useQueryClient();
     const mutation = useMutation({
@@ -103,7 +104,7 @@ function CarForm() {
         handleChange(e.target[e.target.length-3]);
         handleChange(e.target[e.target.length-2]);
         handleChange({ name: "what", value: "car" });
-        handleChange({ name: "image", value: swapPositions(files, featImg, 0) });
+        featImg? handleChange({ name: "image", value: swapPositions(files, featImg, 0) }) : handleChange({ name: "image", value: files});
         handleChange({ name: "userId", value: user._id });
     }
 
@@ -131,11 +132,11 @@ function CarForm() {
                         <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Price:" : "Entreprise:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='price' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='price' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Year:" : "Entrez l'année:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='year' type="text" maxlength="4" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='year' type="number" maxlength="4" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Make:" : "Entrez Make:"}
@@ -147,11 +148,11 @@ function CarForm() {
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Total Mileage:" : "Entrez le kilométrage total:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='mileage' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='mileage' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Miles per Gallon:" : "Entrez des kilomètres par gallon:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='mpg' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='mpg' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Color:" : "Entrez la couleur:"}
@@ -176,7 +177,7 @@ function CarForm() {
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Year of Registration:" : "Année d'inscription:"}
-                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='yor' type="text" required />
+                                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='yor' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Manual or Automatic:" : "Manuel ou automatique:"}

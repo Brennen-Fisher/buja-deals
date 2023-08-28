@@ -173,7 +173,7 @@ export default function Profile() {
 
         return (
             <div className='flex flex-col-reverse gap-5 pt-5 lg:grid grid-cols-[5fr,1fr] w-full'>
-                <div className='grid grid-cols-1 lg:grid-cols-3 w-full gap-5'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 min-[1800px]:grid-cols-3 w-full gap-5'>
                     {
                         data.posts && data.posts.map(p => (
                             <div className='flex flex-col items-center max-w-[370px] gap-2 py-3'>
@@ -184,7 +184,7 @@ export default function Profile() {
                                     <button className='p-2 font-bold w-full text-black bg-white rounded hover:underline text-[15px]' onClick={() => { p.what === "house" ? navigate("/house-edit/" + p._id) : navigate("/car-edit/" + p._id) }}>{lang === "En" ? "Edit" : "Modifier"}</button>
                                     <button className='p-2 font-bold w-full text-black bg-white rounded hover:underline text-[15px]' onClick={() => deletePost(p._id)}>{lang === "En" ? "Delete" : "Supprimer"}</button>
                                 </div>
-                                <button className='p-2 w-full font-bold text-black bg-white rounded hover:underline text-[15px]'>Verify Your Listing</button>
+                                <button className='p-2 w-full font-bold text-black bg-white rounded hover:underline text-[15px]' onClick={()=>navigate("/verify/" + p._id) }>Verify Your Listing</button>
                             </div>
                         ))}
                 </div>
@@ -222,13 +222,14 @@ export default function Profile() {
         });
 
         useEffect(() => {
-            setSaved(test);
+            if(test)
+                setSaved(test);
         }, []);
 
         return (
-            <div className='grid grid-cols-1 lg:grid-cols-4 h-auto gap-2 py-3'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 min-[1800px]:grid-cols-4 lg:max-w-[1100px] min-[1800px]:max-w-full h-auto gap-2 py-3'>
                 {
-                    test.length !== 0 && test ? test.map(p => (
+                    test?.length !== 0 && test ? test.map(p => (
                         <div className='flex flex-col items-center'>
                             {/* {console.log(p._id)} */}
                             {(p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)}
