@@ -22,7 +22,7 @@ export default function Profile() {
     // const { id } = useParams();
     var existing = JSON.parse(localStorage.getItem('user'));
 
-    const { isLoading, error, data } = useQuery({
+    const { isLoading, error, data, refetch } = useQuery({
         queryKey: ["lists"],
         queryFn: () =>
             newRequest.get(`/list/posts?` + "userId=" + user._id + "&sort=date&order=-1").then((res) => {
@@ -50,6 +50,7 @@ export default function Profile() {
     if (!user) {
         navigate("/home");
     }
+
     function Profile() {
 
         function formatPhoneNumber(str) {
@@ -70,22 +71,39 @@ export default function Profile() {
         }
 
         const setEmail = (props) => {
-            console.log(props);
-            var existing = JSON.parse(localStorage.getItem('user'));
-            existing.email = props;
-            newRequest.put(`/auth/set/${user._id}`, { email: props });
-            localStorage.setItem('user', JSON.stringify(existing));
+            // console.log(props);
+            if (props !== "") {
+                if (props.toLowerCase().match(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)) {
+                    var existing = JSON.parse(localStorage.getItem('user'));
+                    existing.email = props;
+                    newRequest.put(`/auth/set/${user._id}`, { email: props });
+                    localStorage.setItem('user', JSON.stringify(existing));
+                }
+                else {
+                    alert("Enter a vaild email");
+                }
+            } else {
+                alert("Did not enter anything");
+            }
         }
         const setPhone = (props) => {
             // console.log(props);
-            var existing = JSON.parse(localStorage.getItem('user'));
-            existing.phone = props;
-            newRequest.put(`/auth/set/${user._id}`, { phone: props });
-            localStorage.setItem('user', JSON.stringify(existing));
+            if (props !== "") {
+                var existing = JSON.parse(localStorage.getItem('user'));
+                existing.phone = props;
+                newRequest.put(`/auth/set/${user._id}`, { phone: props });
+                localStorage.setItem('user', JSON.stringify(existing));
+            } else {
+                alert("Did not enter anything");
+            }
         }
         const setPass = (props) => {
             // console.log(props);
-            newRequest.put(`/auth/pass/${user._id}`, { password: props});
+            if (props !== "") {
+                newRequest.put(`/auth/pass/${user._id}`, { password: props });
+            } else {
+                alert("Did not enter anything");
+            }
         }
 
         return (
@@ -100,7 +118,7 @@ export default function Profile() {
                             </div>
                             <div className='flex flex-row gap-3 items-center font-normal w-full justify-between lg:justify-end text-sm lg:text-lg'>
                                 <h1>{user && user.email}</h1>
-                                <a onClick={()=>setEmail(prompt("Set a new email"))} className='text-lg font-medium text-blue-400 hover:underline'>Edit</a>
+                                <a onClick={() => setEmail(prompt("Set a new email"))} className='text-lg font-medium text-blue-400 hover:underline'>Edit</a>
                             </div>
                         </div>
                         {/* <h2>Name: {user&&user.name}</h2> */}
@@ -111,7 +129,7 @@ export default function Profile() {
                             </div>
                             <div className='flex flex-row gap-3 items-center font-normal w-full justify-between lg:justify-end text-sm lg:text-lg'>
                                 <h1>{user && formatPhoneNumber(user.phone)}</h1>
-                                <a onClick={()=>setPhone(prompt("Set a new Phone Number"))} className='text-lg font-medium text-blue-400 hover:underline'>Edit</a>
+                                <a onClick={() => setPhone(prompt("Set a new Phone Number"))} className='text-lg font-medium text-blue-400 hover:underline'>Edit</a>
                             </div>
                         </div>
                         <div className='flex w-full justify-between lg:pt-0 items-center lg:items-start lg:flex-row flex-col [&>h1]:font-bold [&>h1]:text-lg'>
@@ -120,7 +138,7 @@ export default function Profile() {
                                 <label className='text-[#a7a6ab]'>Reset your password. Make sure its secure to protect your account</label>
                             </div>
                             <div className='flex flex-row gap-3 items-center font-normal w-full justify-between lg:justify-end text-sm lg:text-lg'>
-                                <button onClick={()=>setPass(prompt("Set a new Password"))} type='button' className='text-blue-700 font-bold border-[1px] rounded-md border-blue-700 p-2'>Reset Password</button>
+                                <button onClick={() => setPass(prompt("Set a new Password"))} type='button' className='text-blue-700 font-bold border-[1px] rounded-md border-blue-700 p-2'>Reset Password</button>
                             </div>
                         </div>
                         <div className='flex w-full justify-between lg:pt-0 items-center lg:items-start lg:flex-row flex-col [&>h1]:font-bold [&>h1]:text-lg'>
@@ -169,24 +187,29 @@ export default function Profile() {
             alert("deleting post " + e);
             mutationDel.mutate(e);
         }
-
+        useEffect(() => {
+            refetch();
+        }, [data.posts]);
 
         return (
             <div className='flex flex-col-reverse gap-5 pt-5 lg:grid grid-cols-[5fr,1fr] w-full'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 min-[1800px]:grid-cols-3 w-full gap-5'>
                     {
-                        data.posts && data.posts.map(p => (
-                            <div className='flex flex-col items-center max-w-[370px] gap-2 py-3'>
-                                {
-                                    (p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)
-                                }
-                                <div className='flex flex-row gap-2 w-full items-center'>
-                                    <button className='p-2 font-bold w-full text-black bg-white rounded hover:underline text-[15px]' onClick={() => { p.what === "house" ? navigate("/house-edit/" + p._id) : navigate("/car-edit/" + p._id) }}>{lang === "En" ? "Edit" : "Modifier"}</button>
-                                    <button className='p-2 font-bold w-full text-black bg-white rounded hover:underline text-[15px]' onClick={() => deletePost(p._id)}>{lang === "En" ? "Delete" : "Supprimer"}</button>
+                        data?.posts.length !== 0 && data ?
+                            data.posts && data.posts.map(p => (
+                                <div className='flex flex-col items-center max-w-[370px] gap-2 py-3'>
+                                    {
+                                        (p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)
+                                    }
+                                    <div className='flex flex-row gap-2 w-full items-center'>
+                                        <button type='button' className='p-2 font-bold w-full text-black bg-white rounded hover:underline text-[15px]' onClick={() => { p.what === "house" ? navigate("/house-edit/" + p._id) : navigate("/car-edit/" + p._id) }}>{lang === "En" ? "Edit" : "Modifier"}</button>
+                                        <button type='button' className='p-2 font-bold w-full text-black bg-white rounded hover:underline text-[15px]' onClick={() => deletePost(p._id)}>{lang === "En" ? "Delete" : "Supprimer"}</button>
+                                    </div>
+                                    <button type='button' className='p-2 w-full font-bold text-black bg-white rounded hover:underline text-[15px]' onClick={() => navigate("/verify/" + p._id)}>Verify Your Listing</button>
                                 </div>
-                                <button className='p-2 w-full font-bold text-black bg-white rounded hover:underline text-[15px]' onClick={()=>navigate("/verify/" + p._id) }>Verify Your Listing</button>
-                            </div>
-                        ))}
+                            ))
+                            : <div>No Listings</div>
+                    }
                 </div>
             </div>
         );
@@ -222,7 +245,7 @@ export default function Profile() {
         });
 
         useEffect(() => {
-            if(test)
+            if (test)
                 setSaved(test);
         }, []);
 
@@ -238,16 +261,6 @@ export default function Profile() {
             </div>
         );
     }
-    function Verified() {
-
-        return (
-            <div className='flex gap-2'>
-                <div className='flex items-start flex-col [&>h2]:font-bold [&>h2]:text-2xl pt-10'>
-                    <h2>{lang === "En" ? "Please use lumicash to send a payment of X amount and send the listing you'd like to verify" : "Vos annonces Annonces enregistrées Vérifié Veuillez utiliser Lumicash pour envoyer un paiement d'un montant X et envoyer l'annonce que vous souhaitez vérifier"}</h2>
-                </div>
-            </div>
-        );
-    }
     // {lang === "En" ?"null":"null"}
     return (
         <div className='flex flex-col w-full lg:flex-row h-full bg-[skyblue] min-h-[700px]'>
@@ -255,13 +268,11 @@ export default function Profile() {
                 <button className='bg-blue-400 hover:underline text-[15px] text-black font-semibold py-2 px-4 rounded' onClick={() => { setVerified(false); setProfile(true); setItems(false); setListings(false); }}>{lang === "En" ? "Account Info" : "Informations de compte"}</button>
                 <button className='bg-blue-400 hover:underline text-[15px] text-black font-semibold py-2 px-4 rounded' onClick={() => { setVerified(false); setItems(true); setProfile(false); setListings(false); }}>{lang === "En" ? "Your Listings" : "Vos annonces"}</button>
                 <button className='bg-blue-400 hover:underline text-[15px] text-black font-semibold py-2 px-4 rounded' onClick={() => { setVerified(false); setListings(true); setItems(false); setProfile(false); }}>{lang === "En" ? "Saved Listings" : "Listes enregistrées"}</button>
-                <button className='bg-blue-400 hover:underline text-[15px] text-black font-semibold py-2 px-4 rounded' onClick={() => { setVerified(true); setListings(false); setItems(false); setProfile(false); }}>{lang === "En" ? "Verified" : "Vérifié"}</button>
             </div>
             <div className='w-full relative flex flex-wrap flex-col box-border lg:px-[75px] max-h-full'>
                 {seeProfile ? <Profile /> : null}
                 {seeItems ? <Items /> : null}
                 {seeListings ? <Listings /> : null}
-                {seeVerified ? <Verified /> : null}
             </div>
         </div>
     );

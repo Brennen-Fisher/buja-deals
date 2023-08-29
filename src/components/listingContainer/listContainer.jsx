@@ -99,7 +99,7 @@ function ListContainer(props) {
     let houseRef1;
     props.what === "house" ? houseRef1 = props.room.toString() + " bd " + props.bath.toString() + " bath " + (props.m2 ? props.m2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "") + " m^2" : null;
     let houseRef2;
-    props.what === "house" ? houseRef2 = formatOptionValue(props.style) + " " + (props.sale === "sale" ? "For Sale": "For Rent"):null;
+    props.what === "house" ? houseRef2 = formatOptionValue(props.style) + " " + (props.sale === "sale" ? "For Sale" : "For Rent") : null;
     let carRef1;
     props.what === "car" ? carRef1 = props.color + " " + props.year + " " + props.make + " " + props.model : null;
     let carRef2;
@@ -120,6 +120,7 @@ function ListContainer(props) {
                 <div className='h-auto'>
                     <ImageLoader img={props.image[0]} />
                     <div className='relative w-[99%] flex h-full justify-end'>
+                        <div className='absolute h-full w-full z-9' onClick={() => navigate('/details/' + props.id)}></div>
                         <div id='ForSale' className='h-full'>
                             <div className='hidden lg:block'>
                                 <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded lg:left-[278px] min-[1800px]:left-[298px]'> For {props.sale}</label>
@@ -128,7 +129,7 @@ function ListContainer(props) {
                                 <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded translate-x-[-44%]'> For {props.sale}</label>
                             </div>
                         </div>
-                        <div className='flex h-full items-end lg:translate-y-[-8%]'>
+                        <div className='flex h-full items-end lg:translate-y-[-13%] z-10 min-[1800px]:translate-y-[-8%]'>
                             <div>
                                 <div className='hover:cursor-pointer' onClick={() => {
                                     if (user) {

@@ -84,7 +84,7 @@ export default function navbar() {
 
       <div className={'bg-white lg:flex flex-row items-center justify-between px-48 w-full h-[90px] hidden'}>
         <div className='flex flex-row h-full items-center gap-5'>
-          <a onClick={() => navigate("/home")}><span className='text-2xl font-bold'>Buja Marketplace</span></a>
+          <a href={"/home"} onClick={() =>location.reload}><span className='text-2xl font-bold'>Buja Marketplace</span></a>
           <div className='flex flex-row h-full items-center font-medium text-[17px] [&>div]:h-full [&>div]:flex [&>div]:items-center [&>div]:px-3'>
             <div className='hover:bg-blue-100'>
               <NavLink
@@ -92,6 +92,7 @@ export default function navbar() {
                 className={({ isActive, isPending }) =>
                   isPending ? "pending" : isActive ? "active" : ""
                 }
+                onClick={location.reload}
               >
                 <label className='cursor-pointer'>Home</label>
               </NavLink>
@@ -132,7 +133,7 @@ export default function navbar() {
             {/* <button className='bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={togglePop}>Login</button>*/}
             {seen ? <Login toggle={togglePop} /> : null}
           </div>
-          <button className='whitespace-nowrap bg-blue-300 p-2 text-white rounded-md' onClick={() => navigate("/form")}>Submit Listing</button>
+          <button className='whitespace-nowrap bg-blue-500 p-2 text-white rounded-md' onClick={() => navigate("/form")}>Submit Listing</button>
         </div>
       </div >
     </div>

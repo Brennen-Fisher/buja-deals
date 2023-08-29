@@ -11,7 +11,7 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import { LangContext } from '../../context/LangContext';
 import { useQuery } from "@tanstack/react-query";
 import newRequest from '../../utils/newRequest';
-import { fas } from '@fortawesome/free-solid-svg-icons'
+import { faVolumeHigh, fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -159,6 +159,8 @@ function Details() {
         ref.current && setHeight(ref.current.clientHeight);
     }, [ref]);
 
+    // console.log(data?.userId);
+    // console.log(user);
 
     if (data && data.what === "house")
         // if (lang === "En")
@@ -269,7 +271,7 @@ function Details() {
                                             <div>
                                                 <h2 className='font-bold'>{lang === "En" ? "Features:" : "Caractéristiques:"}</h2>
                                                 <div className='flex flex-row flex-wrap w-auto gap-2'>
-                                                    {data.feat.split(/\s*\|\s*/).map((e) =>
+                                                    {data.feat.map((e) =>
 
                                                         <span className='tag'>
                                                             {e}
@@ -391,16 +393,9 @@ function Details() {
                                         <br />
                                         <div className='[&>div]:flex [&>div]:flex-col [&>div]:items-start flex flex-col gap-5'>
                                             <div>
-                                                {data.phone || data.email || data.name ? (<div><h2>{lang === "En" ? "Contact Info" : "Informations de contact"}</h2>
-                                                    <div id='contact'>
-                                                        <p>{data.name}: {data.phone ? (<div>{formatPhoneNumber(data.phone)}</div>) : null} {data.email ? (<div>{data.email}</div>) : null}</p>
-                                                    </div>
-                                                    <br /></div>) : null}
-                                            </div>
-                                            <div>
                                                 <h2 className='font-bold'>{lang === "En" ? "Features:" : "Caractéristiques:"}</h2>
                                                 <div className='flex flex-row flex-wrap w-auto gap-2'>
-                                                    {data.feat.split(/\s*\|\s*/).map((e) =>
+                                                    {data.feat.map((e) =>
                                                         <span className='tag'>
                                                             {e}
                                                         </span>
@@ -429,7 +424,8 @@ function Details() {
                                     <br />
                                 </div>
                             </div>)}
-                        <div className='bg-white m-2 border-2 border-[grey] rounded-md'>
+
+                        {user?._id === data.userId ? null : <div className='bg-white m-2 border-2 border-[grey] rounded-md'>
                             <form className='flex flex-col gap-2 p-6'>
                                 <h2 className='flex justify-start font-bold text-2xl'>Contact owner</h2>
                                 <input placeholder='Full Name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
@@ -438,7 +434,7 @@ function Details() {
                                 <textarea placeholder='Message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="" id="" cols="30" rows="10"></textarea>
                                 <button type='button' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
                             </form>
-                        </div>
+                        </div>}
                     </div>
                 </div>}
             </div>
@@ -546,7 +542,7 @@ function Details() {
                                             <br /></div>) : null}
                                         <h2 className='font-bold'>{lang === "En" ? "Features:" : "Caractéristiques:"}</h2>
                                         <div className='flex flex-row flex-wrap w-auto gap-2'>
-                                            {data.feat.split(/\s*\|\s*/).map((e) =>
+                                            {data.feat.map((e) =>
 
                                                 <span className='tag'>
                                                     {e}
@@ -669,7 +665,7 @@ function Details() {
                                             <br /></div>) : null}
                                         <h2 className='font-bold'>{lang === "En" ? "Features:" : "Caractéristiques:"}</h2>
                                         <div className='flex flex-row flex-wrap w-auto gap-2'>
-                                            {data.feat && data.feat.split(/\s*\|\s*/).map((e) => (
+                                            {data.feat && data.feat.map((e) => (
                                                 <span className='tag'>
                                                     {e}
                                                 </span>
@@ -695,16 +691,16 @@ function Details() {
                                     <br />
                                 </div>
                             </div>)}
-                        <div className='bg-white m-2 border-2 border-[grey] rounded-md'>
+                        {user?._id === data.userId ? null : <div className='bg-white m-2 border-2 border-[grey] rounded-md'>
                             <form className='flex flex-col gap-2 p-6'>
                                 <h2 className='flex justify-start font-bold text-2xl'>Contact owner</h2>
                                 <input placeholder='Full Name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
                                 <input placeholder='Email' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
                                 <input placeholder='Phone Number' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
                                 <textarea placeholder='Message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="" id="" cols="30" rows="10"></textarea>
-                                <button type='button' className='whitespace-nowrap bg-blue-300 p-2 rounded-md'>Send Message</button>
+                                <button type='button' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
                             </form>
-                        </div>
+                        </div>}
                     </div>
                 </div>}
             </div>

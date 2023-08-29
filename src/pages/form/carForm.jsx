@@ -20,6 +20,7 @@ function CarForm() {
     const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
     const [files, setFiles] = useState([]);
     const [featImg, setFeat] = useState(0);
+    const [tags, setTags] = useState([]);
 
     const queryClient = useQueryClient();
     const mutation = useMutation({
@@ -30,6 +31,34 @@ function CarForm() {
             navigate("/listings");
         },
     });
+
+    function TagsInput() {
+        function handleKeyDown(e) {
+            if (e.key !== 'Enter') return
+            const value = e.target.value
+            if (!value.trim()) return
+            setTags([...tags, value])
+            e.target.value = ''
+        }
+
+        function removeTag(index) {
+            setTags(tags.filter((el, i) => i !== index))
+        }
+
+        return (
+            <div className="flex flex-col items-center flex-wrap gap-[0.5em] mt-[1em] p-[0.5em] rounded-[3px] border-2 border-solid border-black">
+                <div className='w-auto flex flex-row max-w-[500px] flex-wrap'>
+                    {tags?.map((tag, index) => (
+                        <div className="bg-[rgb(218,216,216)] flex flex-row px-[0.75em] py-[0.5em] rounded-[20px]" key={index}>
+                            <span className="text">{tag}</span>
+                            <span className="h-5 w-5 bg-[rgb(48,48,48)] text-white inline-flex justify-center items-center text-lg cursor-pointer ml-[0.5em] rounded-[50%]" onClick={() => removeTag(index)}>&times;</span>
+                        </div>
+                    ))}
+                </div>
+                <textarea onKeyDown={(e) => handleKeyDown(e)} type="text" className="grow w-full px-0 py-[0.5em] border-[none] outline-none" placeholder="Type somthing" />
+            </div>
+        );
+    }
 
     const swapPositions = (array, from, to) => {
         let temp = [];
@@ -100,11 +129,11 @@ function CarForm() {
         handleChange(e.target[12]);
         handleChange(e.target[13]);
         handleChange(e.target[14]);
-        handleChange(e.target[e.target.length-4]);
-        handleChange(e.target[e.target.length-3]);
-        handleChange(e.target[e.target.length-2]);
+        handleChange(e.target[e.target.length - 3]);
+        handleChange(e.target[e.target.length - 2]);
+        handleChange({ name: "feat", value: tags });
         handleChange({ name: "what", value: "car" });
-        featImg? handleChange({ name: "image", value: swapPositions(files, featImg, 0) }) : handleChange({ name: "image", value: files});
+        featImg ? handleChange({ name: "image", value: swapPositions(files, featImg, 0) }) : handleChange({ name: "image", value: files });
         handleChange({ name: "userId", value: user._id });
     }
 
@@ -241,13 +270,30 @@ function CarForm() {
                             <div>
                                 <h2 className='whitespace-nowrap text-[20px] font-medium'>Please select your featured image!</h2>
                                 <br />
-                                <div className='grid grid-cols-1 lg:grid-cols-3'>
+                                <div className='grid grid-cols-1 lg:grid-cols-2 min-[1800px]:grid-cols-3'>
                                     {
-                                        files && files.map((p) => (<button type='button' onClick={() => setFeat(files.indexOf(p))}><img className={featImg === files.indexOf(p) ? 'max-w-[300px] border-[5px] border-blue-500' : 'max-w-[300px]'} src={p}></img></button>))
+                                        files && files.map((p) => (<div className='flex flex-col'>
+                                            <button type='button' onClick={() => setFeat(files.indexOf(p))}>
+                                                <img className={featImg === files.indexOf(p) ? 'max-w-[300px] border-[5px] border-blue-500' : 'max-w-[300px]'} src={p}></img>
+                                            </button>
+                                            <button type='button' onClick={() => {
+                                                setFiles(files.filter(item => item !== p))
+                                            }}>
+                                                Delete
+                                            </button>
+                                        </div>))
                                     }
                                 </div>
                             </div> : null
                         }
+                    </div>
+                    <div id='tags' className='w-full flex flex-col items-center gap-[25px]'>
+                        <h2 className='whitespace-nowrap text-[20px] font-medium' >Tags</h2>
+                        <div className='gap-[20px] pb-14'>
+                            <label className='flex flex-col items-start'>
+                                <TagsInput />
+                            </label>
+                        </div>
                     </div>
                     <div id='additional' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium w-1/4'>{lang === "En" ? "Additional Information" : "Informations Complémentaires"}</h2>
@@ -255,10 +301,6 @@ function CarForm() {
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Description:" : "Entrez Description:"}
                                 <textarea name='desc' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder='Give a short Description'></textarea>
-                            </label>
-                            <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Enter Features:" : "Entrez les fonctionnalités:"}
-                                <textarea name='feat' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder='Airconditioned | Parking | 3 Stories'></textarea>
                             </label>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Facts:" : "Entrez les faits:"}

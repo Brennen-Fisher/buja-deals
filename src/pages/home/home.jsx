@@ -128,6 +128,10 @@ const home = () => {
     // console.log(date);
     // console.log(data);
 
+    // useEffect(() => {
+        
+    // }, [])
+
     useEffect(() => {
         const data = newRequest.get(`/list/random?` + "&type=house&sale=sale&size=" + qLimit,).then(async (res, req) => {
             setPosts(res.data.posts);
