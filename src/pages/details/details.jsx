@@ -15,6 +15,8 @@ import { faVolumeHigh, fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Slider from 'react-slick';
+import emailjs from '@emailjs/browser';
 library.add(fas, far);
 
 // const details= async()=> {
@@ -26,7 +28,14 @@ function Details() {
     const { user } = useContext(AuthContext);
     const { lang } = useContext(LangContext);
     const [btn, setBtn] = useState(false);
+    const form = useRef();
 
+    var settings = {
+        infinite: true,
+        slidesToShow: 1,
+        initialSlide: 0,
+        variableWidth: true,
+    };
 
 
     const { isLoading, error, data } = useQuery({
@@ -47,6 +56,17 @@ function Details() {
         }
 
     }, []);
+
+    function sendEmail(e) {
+        e.preventDefault();
+        emailjs.sendForm('service_yjdrr79', 'template_dmnvrr7', form.current, 'OfeRHuPCHSJiCMMZy')
+            .then((result) => {
+                console.log(result.text);
+            }, (error) => {
+                console.log(error.text);
+            });
+        e.target.reset();
+    }
 
     const saveListing = async () => {
         // await updateDoc(doc(db, "users", currentUser.uid), {
@@ -171,16 +191,18 @@ function Details() {
                         {data.image.length === 1 ?
                             (<div className='lg:w-auto lg:max-w-[660px] flex flex-col w-full p-3 rounded-md'>
                                 <div id='imagePanel' className='bg-white overflow-y-hidden p-4 rounded-md h-[229px] lg:h-[100%]'>
-                                    <LightGallery
-                                        speed={500}
-                                        plugins={[lgThumbnail, lgZoom]}
-                                        controls={true}>
+                                    <Slider {...settings}>
                                         {data.image.map((e) =>
-                                            <a href={e}>
-                                                <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
-                                            </a>
+                                            <LightGallery
+                                                speed={500}
+                                                index={e}
+                                                plugins={[lgThumbnail, lgZoom]}>
+                                                <a href={e}>
+                                                    <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
+                                                </a>
+                                            </LightGallery>
                                         )}
-                                    </LightGallery>
+                                    </Slider>
                                 </div>
                                 <br />
                                 <div className='w-full h-full flex flex-col items-start bg-white p-5 rounded gap-3'>
@@ -301,17 +323,20 @@ function Details() {
                                     <br />
                                 </div>
                             </div>) :
-                            (<div className='lg:w-full lg:max-w-[660px] flex flex-col w-full p-3 rounded-md'>
-                                <div id='imagesPanel' className='bg-white overflow-y-hidden p-4 rounded-md h-[229px] lg:h-[100%]'>
-                                    <LightGallery
-                                        speed={500}
-                                        plugins={[lgThumbnail, lgZoom]}>
+                            (<div className='lg:w-full lg:max-w-[665px] flex flex-col w-full p-3 rounded-md'>
+                                <div id='imagesPanel' className='bg-white z-[1] relative p-4 rounded-md h-[229px] lg:h-[100%]'>
+                                    <Slider {...settings}>
                                         {data.image.map((e) =>
-                                            <a href={e}>
-                                                <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
-                                            </a>
+                                            <LightGallery
+                                                speed={500}
+                                                index={e}
+                                                plugins={[lgThumbnail, lgZoom]}>
+                                                <a href={e}>
+                                                    <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
+                                                </a>
+                                            </LightGallery>
                                         )}
-                                    </LightGallery>
+                                    </Slider>
                                 </div>
                                 <br />
                                 <div className='w-full h-full flex flex-col items-start bg-white p-5 rounded gap-3'>
@@ -426,13 +451,14 @@ function Details() {
                             </div>)}
 
                         {user?._id === data.userId ? null : <div className='bg-white m-2 border-2 border-[grey] rounded-md'>
-                            <form className='flex flex-col gap-2 p-6'>
+                            <form onSubmit={sendEmail} ref={form} className='flex flex-col gap-2 p-6'>
+                                <input className='hidden' name='param' value={id}></input>
                                 <h2 className='flex justify-start font-bold text-2xl'>Contact owner</h2>
-                                <input placeholder='Full Name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <input placeholder='Email' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <input placeholder='Phone Number' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <textarea placeholder='Message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="" id="" cols="30" rows="10"></textarea>
-                                <button type='button' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
+                                <input placeholder='Full Name' name='user_name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <input placeholder='Email' name='user_email' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <input placeholder='Phone Number' name='user_number' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <textarea placeholder='Message' name='message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="" cols="30" rows="10"></textarea>
+                                <button type='submit' value='Send' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
                             </form>
                         </div>}
                     </div>
@@ -448,15 +474,18 @@ function Details() {
                         {data.image.length === 1 ?
                             (<div className=' lg:w-auto lg:max-w-[660px] flex flex-col w-full p-3 rounded-md'>
                                 <div id='imagePanel' className='bg-white overflow-y-hidden p-4 rounded-md h-[229px] lg:h-[100%]'>
-                                    <LightGallery
-                                        speed={500}
-                                        plugins={[lgThumbnail, lgZoom]}>
+                                    <Slider {...settings}>
                                         {data.image.map((e) =>
-                                            <a href={e}>
-                                                <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
-                                            </a>
+                                            <LightGallery
+                                                speed={500}
+                                                index={e}
+                                                plugins={[lgThumbnail, lgZoom]}>
+                                                <a href={e}>
+                                                    <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
+                                                </a>
+                                            </LightGallery>
                                         )}
-                                    </LightGallery>
+                                    </Slider>
                                 </div>
                                 <br />
                                 <div className='w-full h-full flex flex-col items-start bg-white p-5 rounded gap-3'>
@@ -571,15 +600,18 @@ function Details() {
                             </div>) :
                             (<div className='lg:w-full lg:max-w-[660px] flex flex-col w-full p-3 rounded-md'>
                                 <div id='imagesPanel' className='bg-white overflow-y-hidden p-4 rounded-md h-[229px] lg:h-[100%]'>
-                                    <LightGallery
-                                        speed={500}
-                                        plugins={[lgThumbnail, lgZoom]}>
+                                    <Slider {...settings}>
                                         {data.image.map((e) =>
-                                            <a href={e}>
-                                                <img className='flex flex-wrap min-h-[205px] w-[300px] lg:w-[610px]' src={e} />
-                                            </a>
+                                            <LightGallery
+                                                speed={500}
+                                                index={e}
+                                                plugins={[lgThumbnail, lgZoom]}>
+                                                <a href={e}>
+                                                    <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
+                                                </a>
+                                            </LightGallery>
                                         )}
-                                    </LightGallery>
+                                    </Slider>
                                 </div>
                                 <br />
                                 <div className='w-full h-full flex flex-col items-start bg-white p-5 rounded gap-3'>
@@ -692,13 +724,14 @@ function Details() {
                                 </div>
                             </div>)}
                         {user?._id === data.userId ? null : <div className='bg-white m-2 border-2 border-[grey] rounded-md'>
-                            <form className='flex flex-col gap-2 p-6'>
+                            <form onSubmit={sendEmail} ref={form} className='flex flex-col gap-2 p-6'>
+                                <input className='hidden' name='param' value={id}></input>
                                 <h2 className='flex justify-start font-bold text-2xl'>Contact owner</h2>
-                                <input placeholder='Full Name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <input placeholder='Email' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <input placeholder='Phone Number' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <textarea placeholder='Message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="" id="" cols="30" rows="10"></textarea>
-                                <button type='button' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
+                                <input placeholder='Full Name' name='user_name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <input placeholder='Email' name='user_email' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <input placeholder='Phone Number' name='user_number' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                <textarea placeholder='Message' name='message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="" cols="30" rows="10"></textarea>
+                                <button type='submit' value='Send' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
                             </form>
                         </div>}
                     </div>

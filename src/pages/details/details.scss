@@ -2,6 +2,11 @@
     max-width: 100%;
 }
 
+.slick-arrow{
+    z-index: 20;
+    position: relative;
+}
+
 .lg-thumb-item {
     display: flex;
     flex-direction: row;
@@ -48,7 +53,7 @@ a:hover {
         gap: 10px;
         width: 610px;
         max-height: 550px;
-        overflow-y: hidden;
+        // overflow-y: hidden;
 
         #image {
             display: flex;
@@ -67,8 +72,8 @@ a:hover {
         gap: 10px;
         width: 610px;
         max-height: 550px;
-        overflow-y: hidden;
-        overflow: hidden;
+        // overflow-y: hidden;
+        // overflow: hidden;
 
         #image {
             display: flex;

@@ -438,21 +438,6 @@ const home = () => {
                                                 </select>
                                             </div>
                                         </span>
-                                        <span className='flex flex-col items-center w-full whitespace-nowrap'>
-                                            <label>
-                                                Propery Type
-                                            </label>
-                                            <select name="property" className="w-fit p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600">
-                                                <option value="any">Any</option>
-                                                <option value="condo">{lang === "En" ? "Condo" : "condo"}</option>
-                                                <option value="single">{lang === "En" ? "Single Family Home" : "Maison unifamiliale"}</option>
-                                                <option value="townhouse">{lang === "En" ? "Townhouse" : "Maison de ville"}</option>
-                                                <option value="coop">{lang === "En" ? "Coop" : "Coopérative"}</option>
-                                                <option value="apartment">{lang === "En" ? "Apartment" : "Appartement"}</option>
-                                                <option value="multi">{lang === "En" ? "Multi Family" : "Plusieurs familles"}</option>
-                                                <option value="lot">{lang === "En" ? "Lot" : "Parcelle"}</option>
-                                            </select>
-                                        </span>
                                     </div>
                                     <button value={"any"} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' type="submit">Search</button>
                                 </div>

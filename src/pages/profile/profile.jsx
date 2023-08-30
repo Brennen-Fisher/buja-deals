@@ -192,12 +192,12 @@ export default function Profile() {
         }, [data.posts]);
 
         return (
-            <div className='flex flex-col-reverse gap-5 pt-5 lg:grid grid-cols-[5fr,1fr] w-full'>
-                <div className='grid grid-cols-1 lg:grid-cols-2 min-[1800px]:grid-cols-3 w-full gap-5'>
+            <div className='flex flex-col-reverse gap-5 pt-5 lg:grid w-full'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 min-[1800px]:grid-cols-4 w-full gap-2'>
                     {
                         data?.posts.length !== 0 && data ?
                             data.posts && data.posts.map(p => (
-                                <div className='flex flex-col items-center max-w-[370px] gap-2 py-3'>
+                                <div className='flex flex-col items-center max-w-[370px] gap-1 py-3'>
                                     {
                                         (p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)
                                     }
@@ -217,13 +217,6 @@ export default function Profile() {
     }
 
     function Listings() {
-        // p._id==='undefined'?deletePost(p_id):console.log("gaming");
-        // console.log(test);
-        // for (let element of test) {
-        //     if (element === undefined) {
-        //         console.log("dru");
-        //     }
-        // }
 
         const setSaved = (props) => {
             // console.log(props);
@@ -253,9 +246,11 @@ export default function Profile() {
             <div className='grid grid-cols-1 lg:grid-cols-2 min-[1800px]:grid-cols-4 lg:max-w-[1100px] min-[1800px]:max-w-full h-auto gap-2 py-3'>
                 {
                     test?.length !== 0 && test ? test.map(p => (
-                        <div className='flex flex-col items-center'>
+                        <div className='flex flex-col items-center max-w-[370px]'>
                             {/* {console.log(p._id)} */}
-                            {(p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)}
+                            {
+                                (p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)
+                            }
                         </div>
                     )) : <div><h1>No Saved Listings</h1></div>}
             </div>
@@ -263,11 +258,11 @@ export default function Profile() {
     }
     // {lang === "En" ?"null":"null"}
     return (
-        <div className='flex flex-col w-full lg:flex-row h-full bg-[skyblue] min-h-[700px]'>
-            <div className='flex flex-col translate-x-[15%] lg:translate-x-[0%] mt-3 bg-white p-5 relative ml-20 top-0 left-0 w-40 h-full justify-center rounded gap-2'>
-                <button className='bg-blue-400 hover:underline text-[15px] text-black font-semibold py-2 px-4 rounded' onClick={() => { setVerified(false); setProfile(true); setItems(false); setListings(false); }}>{lang === "En" ? "Account Info" : "Informations de compte"}</button>
-                <button className='bg-blue-400 hover:underline text-[15px] text-black font-semibold py-2 px-4 rounded' onClick={() => { setVerified(false); setItems(true); setProfile(false); setListings(false); }}>{lang === "En" ? "Your Listings" : "Vos annonces"}</button>
-                <button className='bg-blue-400 hover:underline text-[15px] text-black font-semibold py-2 px-4 rounded' onClick={() => { setVerified(false); setListings(true); setItems(false); setProfile(false); }}>{lang === "En" ? "Saved Listings" : "Listes enregistrées"}</button>
+        <div className='flex flex-col w-full lg:flex-col h-full bg-[skyblue] min-h-[700px]'>
+            <div className='flex flex-row justify-start bg-white py-3 relative top-0 left-0 h-full gap-2 border-t-2 border-black px-48'>
+                <button className={(seeProfile ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setProfile(true); setItems(false); setListings(false); }}>{lang === "En" ? "Account Info" : "Informations de compte"}</button>
+                <button className={(seeItems ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setItems(true); setProfile(false); setListings(false); }}>{lang === "En" ? "Your Listings" : "Vos annonces"}</button>
+                <button className={(seeListings ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setListings(true); setItems(false); setProfile(false); }}>{lang === "En" ? "Saved Listings" : "Listes enregistrées"}</button>
             </div>
             <div className='w-full relative flex flex-wrap flex-col box-border lg:px-[75px] max-h-full'>
                 {seeProfile ? <Profile /> : null}
