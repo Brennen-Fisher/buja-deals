@@ -29,6 +29,7 @@ function Details() {
     const { lang } = useContext(LangContext);
     const [btn, setBtn] = useState(false);
     const form = useRef();
+    const [sent, setSent] = useState(false);
 
     var settings = {
         infinite: true,
@@ -59,6 +60,7 @@ function Details() {
 
     function sendEmail(e) {
         e.preventDefault();
+        setSent(true);
         emailjs.sendForm('service_yjdrr79', 'template_dmnvrr7', form.current, 'OfeRHuPCHSJiCMMZy')
             .then((result) => {
                 console.log(result.text);
@@ -69,28 +71,12 @@ function Details() {
     }
 
     const saveListing = async () => {
-        // await updateDoc(doc(db, "users", currentUser.uid), {
-        //     lists: arrayUnion({
-        //         id,
-        //     }),
-        // });
         newRequest.put(`/user/save/${user._id}`, { saved: [id] });
-        // Get the existing data
         var existing = JSON.parse(localStorage.getItem('user'));
-
-        // If no existing data, create an array
-        // Otherwise, convert the localStorage string to an array
         console.log(existing.saved);
         existing.saved.push(id);
-        // existing.saved.pop();
         console.log(existing.saved);
-
-        // Add new data to localStorage Array
-
-        // Save back to localStorage
         localStorage.setItem('user', JSON.stringify(existing));
-        // console.log(user);
-        // console.log("object");
     }
 
     const deleteListing = () => {
@@ -185,7 +171,7 @@ function Details() {
     if (data && data.what === "house")
         // if (lang === "En")
         return (
-            <div className='flex flex-col justify-center max-w-[400px] lg:max-w-[100%] overflow-x-hidden h-auto bg-[skyblue] border-t-[skyblue] border-t-2'>
+            <div className='flex flex-col justify-center max-w-[100%] overflow-x-hidden h-auto bg-[skyblue] border-t-[skyblue] border-t-2'>
                 {data && <div className=''>
                     <div className='p-12 ml-5 pl-0 w-full flex flex-col lg:flex-row justify-center items-start'>
                         {data.image.length === 1 ?
@@ -195,7 +181,7 @@ function Details() {
                                         {data.image.map((e) =>
                                             <LightGallery
                                                 speed={500}
-                                                index={e}
+                                                index={0}
                                                 plugins={[lgThumbnail, lgZoom]}>
                                                 <a href={e}>
                                                     <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
@@ -323,16 +309,16 @@ function Details() {
                                     <br />
                                 </div>
                             </div>) :
-                            (<div className='lg:w-full lg:max-w-[665px] flex flex-col w-full p-3 rounded-md'>
-                                <div id='imagesPanel' className='bg-white z-[1] relative p-4 rounded-md h-[229px] lg:h-[100%]'>
+                            (<div className='lg:w-full lg:max-w-[665px] flex flex-col items-center w-full p-3 rounded-md'>
+                                <div id='imagesPanel' className='bg-white z-[1] max-w-[310px] lg:max-w-full relative p-4 rounded-md h-[229px] lg:h-[100%]'>
                                     <Slider {...settings}>
                                         {data.image.map((e) =>
                                             <LightGallery
                                                 speed={500}
-                                                index={e}
+                                                index={0}
                                                 plugins={[lgThumbnail, lgZoom]}>
                                                 <a href={e}>
-                                                    <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
+                                                    <img className='flex w-[275px] min-h-[205px] lg:w-[610px]' src={e} />
                                                 </a>
                                             </LightGallery>
                                         )}
@@ -451,15 +437,18 @@ function Details() {
                             </div>)}
 
                         {user?._id === data.userId ? null : <div className='bg-white m-2 border-2 border-[grey] rounded-md'>
-                            <form onSubmit={sendEmail} ref={form} className='flex flex-col gap-2 p-6'>
-                                <input className='hidden' name='param' value={id}></input>
-                                <h2 className='flex justify-start font-bold text-2xl'>Contact owner</h2>
-                                <input placeholder='Full Name' name='user_name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <input placeholder='Email' name='user_email' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <input placeholder='Phone Number' name='user_number' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
-                                <textarea placeholder='Message' name='message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="" cols="30" rows="10"></textarea>
-                                <button type='submit' value='Send' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
-                            </form>
+                            {!sent ?
+                                <form onSubmit={sendEmail} ref={form} className='flex flex-col gap-2 p-6'>
+                                    <input className='hidden' name='param' value={id}></input>
+                                    <h2 className='flex justify-start font-bold text-2xl'>Contact owner</h2>
+                                    <input required placeholder='Full Name' name='user_name' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                    <input required placeholder='Email' name='user_email' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                    <input required placeholder='Phone Number' name='user_number' type="text" className='bg-blue-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' />
+                                    <textarea placeholder='Message' name='message' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-blue-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="" cols="30" rows="10"></textarea>
+                                    <button type='submit' value='Send' className='whitespace-nowrap bg-blue-500 text-white text-medium text-lg p-2 rounded-md'>Send Message</button>
+                                </form>
+                                : <div className='w-[200px] h-[200px] flex justify-center items-center'>Sent</div>
+                            }
                         </div>}
                     </div>
                 </div>}
@@ -473,12 +462,12 @@ function Details() {
                     <div className='p-12 ml-5 pl-0 w-full flex flex-col lg:flex-row justify-center items-start'>
                         {data.image.length === 1 ?
                             (<div className=' lg:w-auto lg:max-w-[660px] flex flex-col w-full p-3 rounded-md'>
-                                <div id='imagePanel' className='bg-white overflow-y-hidden p-4 rounded-md h-[229px] lg:h-[100%]'>
+                                <div id='imagePanel' className='bg-white p-4 rounded-md h-[229px] lg:h-[100%]'>
                                     <Slider {...settings}>
                                         {data.image.map((e) =>
                                             <LightGallery
                                                 speed={500}
-                                                index={e}
+                                                index={0}
                                                 plugins={[lgThumbnail, lgZoom]}>
                                                 <a href={e}>
                                                     <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />
@@ -599,12 +588,12 @@ function Details() {
                                 </div>
                             </div>) :
                             (<div className='lg:w-full lg:max-w-[660px] flex flex-col w-full p-3 rounded-md'>
-                                <div id='imagesPanel' className='bg-white overflow-y-hidden p-4 rounded-md h-[229px] lg:h-[100%]'>
+                                <div id='imagesPanel' className='bg-white p-4 rounded-md h-[229px] lg:h-[100%]'>
                                     <Slider {...settings}>
                                         {data.image.map((e) =>
                                             <LightGallery
                                                 speed={500}
-                                                index={e}
+                                                index={0}
                                                 plugins={[lgThumbnail, lgZoom]}>
                                                 <a href={e}>
                                                     <img className='flex flex-wrap w-[300px] min-h-[205px] lg:w-[610px]' src={e} />

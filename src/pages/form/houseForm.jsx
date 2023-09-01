@@ -46,16 +46,18 @@ function HouseForm() {
         }
 
         return (
-            <div className="flex flex-col items-center flex-wrap gap-[0.5em] mt-[1em] p-[0.5em] rounded-[3px] border-2 border-solid border-black">
-                <div className='w-auto flex flex-row max-w-[500px] flex-wrap'>
-                    {tags?.map((tag, index) => (
-                        <div className="bg-[rgb(218,216,216)] flex flex-row px-[0.75em] py-[0.5em] rounded-[20px]" key={index}>
-                            <span className="text">{tag}</span>
-                            <span className="h-5 w-5 bg-[rgb(48,48,48)] text-white inline-flex justify-center items-center text-lg cursor-pointer ml-[0.5em] rounded-[50%]" onClick={() => removeTag(index)}>&times;</span>
-                        </div>
-                    ))}
+            <div>
+                <div className="flex flex-col items-center flex-wrap gap-[0.5em] mt-[1em] p-[0.5em] rounded-[3px] border-2 border-solid border-black">
+                    <div className='w-auto flex flex-row max-w-[500px] flex-wrap'>
+                        {tags?.map((tag, index) => (
+                            <div className="bg-[rgb(218,216,216)] flex flex-row px-[0.75em] py-[0.5em] rounded-[20px]" key={index}>
+                                <span className="text">{tag}</span>
+                                <span className="h-5 w-5 bg-[rgb(48,48,48)] text-white inline-flex justify-center items-center text-lg cursor-pointer ml-[0.5em] rounded-[50%]" onClick={() => removeTag(index)}>&times;</span>
+                            </div>
+                        ))}
+                    </div>
+                    <textarea onKeyDown={(e) => handleKeyDown(e)} type="text" className="grow w-full px-0 py-[0.5em] border-[none] outline-none" placeholder="Type somthing" />
                 </div>
-                <textarea onKeyDown={(e) => handleKeyDown(e)} type="text" className="grow w-full px-0 py-[0.5em] border-[none] outline-none" placeholder="Type somthing" />
             </div>
         );
     }
@@ -75,6 +77,18 @@ function HouseForm() {
             }
         }
         return temp;
+    }
+
+    function handleClick(e) {
+        console.log(e.target.name);
+        if (e.currentTarget.checked) {
+            if (e.target.name !== "check") return
+            const value = e.target.value
+            if (!value.trim()) return
+            setTags([...tags, value])
+        } else {
+            setTags(tags.filter((el, i) => i !== tags.indexOf(e.target.value)));
+        }
     }
 
     const handleHouseUpload = (e) => {
@@ -285,7 +299,58 @@ function HouseForm() {
                     </div>
                     <div id='tags' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >Tags</h2>
-                        <div className='gap-[20px] pb-14'>
+                        <p>Press Enter to make seperate tags!</p>
+                        <div className='gap-[20px] pb-14 flex flex-col items-center'>
+                            <div className='flex flex-row flex-wrap max-w-[300px] gap-2'>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Heating</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Heating"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Cooling</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Cooling"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Garage</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Garage"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Appliances</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Appliances"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Fence</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Fence"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>New</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="New"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Back Yard</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Back Yard"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Renovated</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Renovated"></input>
+                                    </div>
+                                </div>
+                            </div>
                             <label className='flex flex-col items-start'>
                                 <TagsInput />
                             </label>

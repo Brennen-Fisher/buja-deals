@@ -7,12 +7,16 @@ import ListContainer from '../../components/listingContainer/listContainer';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import newRequest from '../../utils/newRequest';
 import { LangContext } from '../../context/LangContext';
+import Admin from './admin';
 
 export default function Profile() {
     const { user } = useContext(AuthContext);
-    const [seeProfile, setProfile] = useState(true);
-    const [seeItems, setItems] = useState(false);
+    const [seeProfile, setProfile] = useState(false);
+    const [seeItems, setItems] = useState(true);
+    const [findID, setID] = useState('0');
+    const [author, setAuthor] = useState();
     const [seeListings, setListings] = useState(false);
+    const [seeAdmin, setAdmin] = useState(false);
     const [seeVerified, setVerified] = useState(false);
     const navigate = useNavigate();
     const [file, setFile] = useState("");
@@ -21,24 +25,6 @@ export default function Profile() {
 
     // const { id } = useParams();
     var existing = JSON.parse(localStorage.getItem('user'));
-
-    const { isLoading, error, data, refetch } = useQuery({
-        queryKey: ["lists"],
-        queryFn: () =>
-            newRequest.get(`/list/posts?` + "userId=" + user._id + "&sort=date&order=-1").then((res) => {
-                return res.data;
-            }),
-    });
-
-    const { savIsLoading, savError, saved } = useQuery({
-        queryKey: ["list3"],
-        queryFn: () =>
-            newRequest.get(`/list/saved/` + existing._id).then((res) => {
-                // console.log(JSON.stringify(res.data));
-                setTest(res.data);
-                return res.data;
-            }),
-    });
 
     const mutationDel = useMutation({
         mutationFn: (e) =>
@@ -160,6 +146,14 @@ export default function Profile() {
 
     function Items() {
 
+        const { isLoading, error, data, refetch } = useQuery({
+            queryKey: ["lists"],
+            queryFn: () =>
+                newRequest.get(`/list/posts?` + "userId=" + user._id + "&sort=date&order=-1").then((res) => {
+                    return res.data;
+                }),
+        });
+
         /* Old Code
         const [posts, setPosts] = useState();
         const search = async () => {
@@ -189,11 +183,11 @@ export default function Profile() {
         }
         useEffect(() => {
             refetch();
-        }, [data.posts]);
+        }, [data?.posts]);
 
         return (
-            <div className='flex flex-col-reverse gap-5 pt-5 lg:grid w-full'>
-                <div className='grid grid-cols-1 lg:grid-cols-3 min-[1800px]:grid-cols-4 w-full gap-2'>
+            <div className='flex flex-col-reverse items-center gap-5 pt-5 lg:grid w-full'>
+                <div className='grid grid-cols-1 lg:grid-cols-3 min-[1800px]:grid-cols-4 w-fit gap-2'>
                     {
                         data?.posts.length !== 0 && data ?
                             data.posts && data.posts.map(p => (
@@ -218,57 +212,58 @@ export default function Profile() {
 
     function Listings() {
 
-        const setSaved = (props) => {
-            // console.log(props);
-            var existing = JSON.parse(localStorage.getItem('user'));
-            existing.saved = [];
-            for (var obj of props)
-                existing.saved.push(obj._id);
-            newRequest.put(`/user/set/${user._id}`, { saved: existing.saved });
-            localStorage.setItem('user', JSON.stringify(existing));
-        }
-
-
-        const { checkIsLoading, checkError, check } = useQuery({
-            queryKey: ["list5"],
+        const { isLoading, error, data, refetch } = useQuery({
+            queryKey: ["list3"],
             queryFn: () =>
-                newRequest.get(`/list/` + id).then((res) => {
+                newRequest.get(`/list/saved/` + existing._id).then((res) => {
+                    console.log(JSON.stringify(res.data));
                     return res.data;
                 }),
         });
 
         useEffect(() => {
-            if (test)
-                setSaved(test);
-        }, []);
+            refetch();
+        }, [data?.posts]);
 
         return (
-            <div className='grid grid-cols-1 lg:grid-cols-2 min-[1800px]:grid-cols-4 lg:max-w-[1100px] min-[1800px]:max-w-full h-auto gap-2 py-3'>
-                {
-                    test?.length !== 0 && test ? test.map(p => (
-                        <div className='flex flex-col items-center max-w-[370px]'>
-                            {/* {console.log(p._id)} */}
-                            {
-                                (p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)
-                            }
-                        </div>
-                    )) : <div><h1>No Saved Listings</h1></div>}
+            <div className='w-full flex justify-center'>
+                <div className='grid items-center grid-cols-1 min-[1300px]:grid-cols-3 min-[1800px]:grid-cols-4 lg:max-w-[1600px] h-auto gap-2 py-3'>
+                    {
+                        data?.length !== 0 && data ? data.map(p => (
+                            <div className='flex flex-col items-center max-w-[370px]'>
+                                {/* {console.log(p._id)} */}
+                                {
+                                    (p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)
+                                }
+                            </div>
+                        )) : <div><h1>No Saved Listings</h1></div>}
+                </div>
             </div>
         );
     }
+
     // {lang === "En" ?"null":"null"}
-    return (
-        <div className='flex flex-col w-full lg:flex-col h-full bg-[skyblue] min-h-[700px]'>
-            <div className='flex flex-row justify-start bg-white py-3 relative top-0 left-0 h-full gap-2 border-t-2 border-black px-48'>
-                <button className={(seeProfile ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setProfile(true); setItems(false); setListings(false); }}>{lang === "En" ? "Account Info" : "Informations de compte"}</button>
-                <button className={(seeItems ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setItems(true); setProfile(false); setListings(false); }}>{lang === "En" ? "Your Listings" : "Vos annonces"}</button>
-                <button className={(seeListings ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setListings(true); setItems(false); setProfile(false); }}>{lang === "En" ? "Saved Listings" : "Listes enregistrées"}</button>
+    if (user)
+        return (
+            <div className='flex flex-col w-full lg:flex-col h-full bg-[skyblue] min-h-[700px]'>
+                <div className='flex flex-row justify-center lg:justify-start bg-white py-3 relative top-0 left-0 h-full gap-2 border-t-2 border-black lg:px-48'>
+                    <button className={(seeItems ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setItems(true); setProfile(false); setListings(false); setAdmin(false); }}>{lang === "En" ? "Your Listings" : "Vos annonces"}</button>
+                    <button className={(seeListings ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setListings(true); setItems(false); setProfile(false); setAdmin(false); }}>{lang === "En" ? "Saved Listings" : "Listes enregistrées"}</button>
+                    <button className={(seeProfile ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setProfile(true); setItems(false); setListings(false); setAdmin(false); }}>{lang === "En" ? "Account Info" : "Informations de compte"}</button>
+                    {user ? <button className={(seeAdmin ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setAdmin(true); setProfile(false); setItems(false); setListings(false); }}>Admin</button> : null}
+                </div>
+                <div className='w-full relative flex flex-wrap flex-col box-border lg:px-[75px] max-h-full'>
+                    {seeProfile ? <Profile /> : null}
+                    {seeItems ? <Items /> : null}
+                    {seeListings ? <Listings /> : null}
+                    {seeAdmin ? <Admin /> : null}
+                </div>
             </div>
-            <div className='w-full relative flex flex-wrap flex-col box-border lg:px-[75px] max-h-full'>
-                {seeProfile ? <Profile /> : null}
-                {seeItems ? <Items /> : null}
-                {seeListings ? <Listings /> : null}
-            </div>
-        </div>
-    );
+        );
+    else {
+        navigate('/home');
+        return (
+            <div></div>
+        );
+    }
 }

@@ -6,15 +6,39 @@
   text-align: center;
   align-items: center;
   width: auto;
-  max-width: 1920px;
-  position:relative;
-  left:0px !important;
+  max-height: 100% !important;
+  // max-width: 1920px;
+  position: relative;
+  left: 0px !important;
 }
 
-body{
+body {
   background-color: white;
   margin: 0;
   overflow-x: hidden;
+}
+
+@keyframes closeSuc {
+  100% {
+    top: 0%;
+    opacity: 0%;
+  }
+
+  75% {
+    top: 10%;
+    opacity: 100%;
+  }
+
+  0% {
+    opacity: 90%;
+  }
+}
+
+.suc-close {
+  animation: closeSuc;
+  animation-composition: replace;
+  // animation-delay: 5s;
+  animation-duration: 5s;
 }
 
 // .logo {

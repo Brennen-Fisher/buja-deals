@@ -46,10 +46,15 @@ a:hover {
 
 #imagePanel {
 
+    .slick-slider{
+        position: unset !important;
+        justify-content: start !important;
+    }
+
     div {
         display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
+        flex-direction: row;
+        // flex-wrap: wrap;
         gap: 10px;
         width: 610px;
         max-height: 550px;
@@ -65,10 +70,15 @@ a:hover {
 
 #imagesPanel {
 
+    .slick-slider{
+        position: unset !important;
+        justify-content: start !important;
+    }
+
     div {
         display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
+        flex-direction: row;
+        // flex-wrap: wrap;
         gap: 10px;
         width: 610px;
         max-height: 550px;

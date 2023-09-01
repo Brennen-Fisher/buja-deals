@@ -162,7 +162,7 @@ const home = () => {
                 }
             },
             {
-                breakpoint: 1024,
+                breakpoint: 1023,
                 settings: {
                     slidesToShow: 1,
                     swipeToSlide: true,
@@ -455,7 +455,7 @@ const home = () => {
                     <div id='sliderParent' className='w-[90%]'>
                         <Slider {...settings}>
                             {
-                                posts ? posts.map(p => (p.what === "house" ? <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} />)) : <div className='loading'>Loading..</div>
+                                posts ? posts.map(p => (p.what === "house" ? <ListContainer verified={p.verified} hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} verified={p.verified} />)) : <div className='loading'>Loading..</div>
                             }
                         </Slider>
                     </div>

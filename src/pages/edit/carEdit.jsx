@@ -171,6 +171,18 @@ function CarEdit() {
         });
     }
 
+    function handleClick(e) {
+        console.log(e.target.name);
+        if (e.currentTarget.checked) {
+            if (e.target.name !== "check") return
+            const value = e.target.value
+            if (!value.trim()) return
+            setTags([...tags, value])
+        } else {
+            setTags(tags.filter((el, i) => i !== tags.indexOf(e.target.value)));
+        }
+    }
+
     useEffect(() => {
         setPrice(data?.price);
         setYear(data?.year);
@@ -336,7 +348,58 @@ function CarEdit() {
                     </div>
                     <div id='tags' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >Tags</h2>
-                        <div className='gap-[20px] pb-14'>
+                        <p>Press Enter to make seperate tags!</p>
+                        <div className='gap-[20px] pb-14 flex flex-col items-center'>
+                            <div className='flex flex-row flex-wrap max-w-[300px] gap-2'>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Heating</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Heating"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Cooling</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Cooling"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Smart Radio</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Smart Radio"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Usb Port</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Usb Port"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Parking Assistance</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Parking Assistance"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>New</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="New"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Used</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Used"></input>
+                                    </div>
+                                </div>
+                                <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
+                                    <div className='flex flex-row items-center gap-2'>
+                                        <h1>Driving Assistance</h1>
+                                        <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Driving Assistance"></input>
+                                    </div>
+                                </div>
+                            </div>
                             <label className='flex flex-col items-start'>
                                 <TagsInput />
                             </label>

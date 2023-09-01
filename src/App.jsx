@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './App.scss';
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Home from "./pages/home/home";
 import Listings from "./pages/listings/listings";
-import About from "./pages/about/about";
+import About from "./pages/static/about";
+import Terms from "./pages/static/terms";
 import Login from "./pages/login/login";
 import Profile from "./pages/profile/profile";
+import Admin from "./pages/profile/admin";
 import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
 import Details from './pages/details/details';
@@ -18,13 +20,15 @@ import CarEdit from './pages/edit/carEdit';
 import HouseForm from './pages/form/houseForm';
 import CarForm from './pages/form/carForm';
 import VerifyForm from './pages/contact/verifyForm';
+import { AuthContext } from './context/AuthContext';
 
 function App() {
   const [lang, setLang] = useState("En");
   const queryClient = new QueryClient();
+  const { user } = useContext(AuthContext);
   const Layout = () => {
     return (
-      <div className="app">
+      <div className="app min-w-[375px] overflow-x-hidden">
         <QueryClientProvider client={queryClient}>
           <div>
             <script src="js/wow.min.js"></script>
@@ -65,10 +69,6 @@ function App() {
           path: "/listings/:id",
           element: <Listings />,
         },
-        // {
-        //   path: "/about",
-        //   element: <About />,
-        // },
         {
           path: "/login",
           element: <Login />,
@@ -80,6 +80,14 @@ function App() {
         {
           path: "/form",
           element: <Form />,
+        },
+        {
+          path: "/about",
+          element: <About />,
+        },
+        {
+          path: "/terms",
+          element: <Terms />,
         },
         {
           path: "/details/:id",
@@ -105,13 +113,19 @@ function App() {
           path: "/verify/:id",
           element: <VerifyForm />,
         },
+        {
+          path: "/admin",
+          element: <Admin />,
+        },
       ],
     },
   ]);
+
   return (
     <LangContext.Provider value={{ lang, setLang }}>
       <RouterProvider router={router} />
     </LangContext.Provider>
   );
 }
+
 export default App

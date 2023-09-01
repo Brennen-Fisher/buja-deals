@@ -85,6 +85,7 @@ export default function navbar() {
 
       <div className={'bg-white lg:flex flex-row items-center justify-between px-48 w-full h-[90px] hidden'}>
         <div className='flex flex-row h-full items-center gap-5'>
+          <a href={"/home"} onClick={() => location.reload}><span className='text-2xl font-bold'><img className='max-w-[250px] mb-[-20px]' src={logo} /></span></a>
           <div className='flex flex-row h-full items-center font-medium text-[17px] [&>div]:h-full [&>div]:flex [&>div]:items-center [&>div]:px-3'>
             <div className='hover:bg-blue-100'>
               <NavLink
@@ -117,7 +118,7 @@ export default function navbar() {
       </NavLink> */}
           </div>
         </div>
-        <a href={"/home"} onClick={() =>location.reload}><span className='text-2xl font-bold'><img className='max-w-[250px] mb-[-20px]' src={logo}/></span></a>
+
         <div className='flex flex-row items-center gap-3 font-medium'>
           <div className="relative w-full lg:max-w-sm p-2.5">
             <select className="w-full p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600" onInput={changeLang} name="lang" id="lang">

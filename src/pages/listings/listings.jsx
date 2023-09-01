@@ -21,7 +21,8 @@ function Listings() {
     const [qCom, setCom] = useState();
     const [qZone, setZone] = useState();
     const [qStyle, setStyle] = useState();
-    const [qPrice, setPrice] = useState();
+    const [qMin, setMax] = useState();
+    const [qMax, setMin] = useState();
 
     const [first, setFirst] = useState(0);
     const { lang } = useContext(LangContext);
@@ -31,7 +32,7 @@ function Listings() {
     const { isLoading, error, data, refetch } = useQuery({
         queryKey: ["lists"],
         queryFn: () =>
-            newRequest.get(`/list/posts?` + (qCom ? "&com=" + qCom : "") + (qZone ? "&zone=" + qZone : "") + (qStyle ? "&style=" + qStyle : "") + (qPrice ? "&price=" + qPrice : "") + (qWhat ? "&what=" + qWhat : "") + (qSale ? "&sale=" + qSale : "") + (qType ? "&sort=" + qType : "") + (qOrder ? "&order=" + qOrder : "") + "&page=" + page + "&limit=" + limit).then(async (res, req) => {
+            newRequest.get(`/list/posts?` + (qCom ? "&com=" + qCom : "") + (qZone ? "&zone=" + qZone : "") + (qStyle ? "&style=" + qStyle : "") + (qMin ? "&min=" + qMin : "") + (qMax ? "&max=" + qMax : "") + (qWhat ? "&what=" + qWhat : "") + (qSale ? "&sale=" + qSale : "") + (qType ? "&sort=" + qType : "") + (qOrder ? "&order=" + qOrder : "") + "&page=" + page + "&limit=" + limit).then(async (res, req) => {
                 // console.log(`/list/posts?` + "what=" + qWhat + "&sale=" + qSale + "&sort=" + qType + "&order=" + qOrder + "&page=" + page + "&limit=" + limit);
                 return res.data;
             }),
@@ -135,17 +136,23 @@ function Listings() {
             setOrder(1);
             // console.log("third");
         }
+        else if (e.target.value == "verified") {
+            setType("verified");
+            setOrder(-1);
+            // console.log("third");
+        }
     }
 
     const changeWhat = async (e) => {
         // console.log(e.target.value);
         if (e.target.value === "any") {
             setWhat();
+            setStyle();
         } else if (e.target.value == "house") {
             setWhat("house");
         } else if (e.target.value == "car") {
             setWhat("car");
-            if(qStyle !== null)
+            if (qStyle !== null)
                 setStyle();
         }
     }
@@ -205,36 +212,51 @@ function Listings() {
         }
     }
 
-    const changePrice = async (e) => {
+    const changeMin = async (e) => {
         // console.log(e.target.value);
         if (e.target.value == "any") {
-            setPrice();
+            setMin();
         } else if (e.target.value == "5000") {
-            setPrice("5000");
+            setMin("5000");
         } else if (e.target.value == "10000") {
-            setPrice("10000");
+            setMin("10000");
         } else if (e.target.value == "50000") {
-            setPrice("50000");
+            setMin("50000");
         } else if (e.target.value == "100000") {
-            setPrice("100000");
+            setMin("100000");
         } else if (e.target.value == "200000") {
-            setPrice("200000");
+            setMin("200000");
         } else if (e.target.value == "300000") {
-            setPrice("300000");
+            setMin("300000");
         } else if (e.target.value == "500000") {
-            setPrice("500000");
+            setMin("500000");
+        }
+    }
+
+    const changeMax = async (e) => {
+        // console.log(e.target.value);
+        if (e.target.value == "any") {
+            setMax();
+        } else if (e.target.value == "100000") {
+            setMax("100000");
+        } else if (e.target.value == "200000") {
+            setMax("200000");
+        } else if (e.target.value == "300000") {
+            setMax("300000");
+        } else if (e.target.value == "500000") {
+            setMax("500000");
         } else if (e.target.value == "1000000") {
-            setPrice("1000000");
+            setMax("1000000");
         } else if (e.target.value == "1500000") {
-            setPrice("1500000");
+            setMax("1500000");
         } else if (e.target.value == "2000000") {
-            setPrice("2000000");
+            setMax("2000000");
         } else if (e.target.value == "2500000") {
-            setPrice("2500000");
+            setMax("2500000");
         } else if (e.target.value == "5000000") {
-            setPrice("5000000");
+            setMax("5000000");
         } else if (e.target.value == "10000000") {
-            setPrice("10000000");
+            setMax("10000000");
         }
     }
 
@@ -265,7 +287,7 @@ function Listings() {
             params[1] !== "any" ? setCom(params[1]) : setCom();
             params[2] !== "any" ? setZone(params[2]) : setZone();
             params[3] !== "any" ? setStyle(params[3]) : setStyle();
-            params[4] !== "any" ? setPrice(params[4]) : setPrice();
+            params[4] !== "any" ? setMax(params[4]) : setMax();
             params[5] !== "any" ? setWhat(params[5]) : setWhat();
             refetch();
         }
@@ -274,7 +296,7 @@ function Listings() {
     useEffect(() => {
         setPage(1);
         refetch();
-    }, [qSale, qWhat, qType, qOrder, qZone, qPrice, qStyle, qCom]);
+    }, [qSale, qWhat, qType, qOrder, qZone, qMin, qMax, qStyle, qCom]);
 
     useEffect(() => {
         refetch();
@@ -288,15 +310,6 @@ function Listings() {
                         <div className='sideBar items-center flex flex-col py-[20px] mr-4 min-[1800px]:items-start'>
                             <form className='gap-1 lg:flex grid grid-cols-2 lg:flex-row' method='post' id='qForm'>
                                 <div>
-                                    <select onInput={changeSale} name="howBuy" id="how">
-                                        {/** Text Here */}
-                                        <option value="any">Any</option>
-                                        <option value="sale">{lang === "En" ? "Buy" : "Acheter"}</option>
-                                        <option value="rent">{lang === "En" ? "Rent" : "Louer"}</option>
-                                    </select>
-                                    <label htmlFor="how">{lang === "En" ? "Buy/Rent" : "Acheter/Louer"}</label>
-                                </div>
-                                <div>
                                     <select onInput={changeWhat} name="sortWhat" id="house">
                                         {/** Text Here */}
                                         <option value="any">Any</option>
@@ -305,21 +318,30 @@ function Listings() {
                                     </select>
                                     <label htmlFor="house">{lang === "En" ? "Cars/Houses" : "Voiture/Maison"}</label>
                                 </div>
+                                <div>
+                                    <select onInput={changeSale} name="howBuy" id="how">
+                                        {/** Text Here */}
+                                        <option value="any">Any</option>
+                                        <option value="sale">{lang === "En" ? "Buy" : "Acheter"}</option>
+                                        <option value="rent">{lang === "En" ? "Rent" : "Louer"}</option>
+                                    </select>
+                                    <label htmlFor="how">{lang === "En" ? "Buy/Rent" : "Acheter/Louer"}</label>
+                                </div>
                                 {
-                                    qWhat==="house"?(
-                                    <div>
-                                        <select onInput={changeStyle} id="prop" name="property">
-                                            <option value="any">Any</option>
-                                            <option value="condo">{lang === "En" ? "Condo" : "condo"}</option>
-                                            <option value="single">{lang === "En" ? "Single Family Home" : "Maison unifamiliale"}</option>
-                                            <option value="townhouse">{lang === "En" ? "Townhouse" : "Maison de ville"}</option>
-                                            <option value="coop">{lang === "En" ? "Coop" : "Coopérative"}</option>
-                                            <option value="apartment">{lang === "En" ? "Apartment" : "Appartement"}</option>
-                                            <option value="multi">{lang === "En" ? "Multi Family" : "Plusieurs familles"}</option>
-                                            <option value="lot">{lang === "En" ? "Lot" : "Parcelle"}</option>
-                                        </select>
-                                        <label htmlFor="prop">Propery Type</label>
-                                    </div>):null
+                                    qWhat === "house" ? (
+                                        <div>
+                                            <select onInput={changeStyle} id="prop" name="property">
+                                                <option value="any">Any</option>
+                                                <option value="condo">{lang === "En" ? "Condo" : "condo"}</option>
+                                                <option value="single">{lang === "En" ? "Single Family Home" : "Maison unifamiliale"}</option>
+                                                <option value="townhouse">{lang === "En" ? "Townhouse" : "Maison de ville"}</option>
+                                                <option value="coop">{lang === "En" ? "Coop" : "Coopérative"}</option>
+                                                <option value="apartment">{lang === "En" ? "Apartment" : "Appartement"}</option>
+                                                <option value="multi">{lang === "En" ? "Multi Family" : "Plusieurs familles"}</option>
+                                                <option value="lot">{lang === "En" ? "Lot" : "Parcelle"}</option>
+                                            </select>
+                                            <label htmlFor="prop">Propery Type</label>
+                                        </div>) : null
                                 }
                                 <div>
                                     <select onInput={changeZone} name="zone">
@@ -353,11 +375,23 @@ function Listings() {
                                     </label>
                                 </div>
                                 <div>
-                                    <select onInput={changePrice} name="price">
+                                    <select onInput={changeMin} name="price">
                                         <option value="any">Any</option>
                                         <option value="5000">5 000</option>
                                         <option value="10000">10 000</option>
                                         <option value="50000">50 000</option>
+                                        <option value="100000">100 000</option>
+                                        <option value="200000">200 000</option>
+                                        <option value="300000">300 000</option>
+                                        <option value="500000">500 000</option>
+                                    </select>
+                                    <label>
+                                        Min Price
+                                    </label>
+                                </div>
+                                <div>
+                                    <select onInput={changeMax} name="price">
+                                        <option value="any">Any</option>
                                         <option value="100000">100 000</option>
                                         <option value="200000">200 000</option>
                                         <option value="300000">300 000</option>
@@ -389,6 +423,7 @@ function Listings() {
                                                 <option value="recent">{lang === "En" ? "Recent" : "récent"}</option>
                                                 <option value="low">{lang === "En" ? "Lowest Price" : "Prix le plus bas"}</option>
                                                 <option value="high">{lang === "En" ? "Highest Price" : "Le prix le plus élevé"}</option>
+                                                <option value="verified">Verified</option>
                                             </select>
                                             <label htmlFor="sort">{lang === "En" ? "Sort By" : "Trier par"}</label>
                                         </div>
