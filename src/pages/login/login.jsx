@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import './login.scss';
 import newRequest from '../../utils/newRequest';
 import { AuthContext } from '../../context/AuthContext.jsx';
+import { OnLogContext } from '../../context/OnLogContext';
 
 function login(props) {
 
@@ -12,6 +13,7 @@ function login(props) {
     const [err, setErr] = useState("");
     const [label, setLabel] = useState("");
     const { loading, error, dispatch } = useContext(AuthContext);
+    const { onLog, setOnLog } = useContext(OnLogContext);
 
     const handleSign = async (e) => {
         e.preventDefault();
@@ -26,6 +28,7 @@ function login(props) {
                 password,
             });
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+            setOnLog(true);
             // localStorage.setItem("currentUser", JSON.stringify(res.data));
             props.toggle();
             setErr("");
@@ -163,6 +166,10 @@ function login(props) {
                 <div className='flex flex-col items-start'>
                     Confirm Password:
                     <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' type="password" required />
+                </div>
+                <div className='flex flex-row items-center'>
+                    Agree to our terms and conditions
+                    <input className='w-[20px] h-[20px]' required type="checkbox" />
                 </div>
                 <button className='bg-blue-500 hover:bg-blue-700 text-[white] w-full text-center no-underline inline-block text-base cursor-pointer px-5 py-2.5 rounded-[5px] border-[none];' type='submit'>Register</button>
                 <br />

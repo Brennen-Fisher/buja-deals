@@ -1,6 +1,6 @@
 .sideBar {
 
-    div {
+    .drop {
         -webkit-tap-highlight-color: transparent;
         background-color: #ffffff;
         border: 1px solid #bdbdbd;
@@ -27,9 +27,6 @@
         select {
             outline: none !important;
             align-items: center;
-            // -webkit-appearance: none;
-            // -moz-appearance: none;
-            // appearance: none;
             background-color: transparent;
             border: 0;
             padding: 20px 16px 0px 16px;

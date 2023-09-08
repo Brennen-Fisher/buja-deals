@@ -35,7 +35,7 @@ function Admin() {
 
     function grabUser(e) {
         newRequest.get(`/user/get/` + e).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             setAuthor(res.data);
             // return (res.data);
         });
@@ -48,6 +48,10 @@ function Admin() {
 
     const handleVer = async () => {
         newRequest.put(`/list/ver/` + findID, { ver: true });
+    }
+
+    const handleDel = async () => {
+        newRequest.delete(`/list/` + findID);
     }
 
     useEffect(() => {
@@ -72,6 +76,7 @@ function Admin() {
                         <h1>{"Email: " + author?.email}</h1>
                         <h1>{"Phone: " + author?.phone}</h1>
                         <button type='button' onClick={handleVer} className='bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Verify</button>
+                        <button type='button' onClick={handleDel} className='bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Delete</button>
                     </div>
                 </div>
             </div>

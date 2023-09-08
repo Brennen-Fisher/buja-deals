@@ -28,11 +28,10 @@ export default function footer() {
           <div className='flex flex-col text-white gap-9 pb-5 pt-10'>
             <h1 className='font-bold text-2xl lg:text-4xl'>Links</h1>
             <div className='flex justify-center'>
-              <div className='grid grid-cols-2 items-start'>
+              <div className='flex flex-row gap-3 items-start'>
                 <a href="/about">About</a>
-                <a href="">Agreement</a>
                 <a href="/terms">Terms</a>
-                <a href="">Support</a>
+                <a href="/contact">Contact Us</a>
               </div>
             </div>
           </div>

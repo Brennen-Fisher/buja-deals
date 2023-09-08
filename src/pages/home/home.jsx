@@ -174,7 +174,7 @@ const home = () => {
 
     return (
         <div className='h-full homeContainer bg-[skyblue]'>
-            <div className='searchArea flex flex-col justify-center items-center w-full min-h-[475px] bg-[url(https://as1.ftcdn.net/v2/jpg/02/59/49/04/1000_F_259490451_Iet3CQIcQ3J7YG6x20an3mXqYPO6WRZf.jpg)] bg-no-repeat bg-cover p-[50px]'>
+            <div className='searchArea flex flex-col justify-center items-center w-full min-h-[475px] bg-[url(https://as2.ftcdn.net/v2/jpg/06/25/36/69/1000_F_625366901_IVty8jodvjILo3IyKTyXeBqMaa8Ce2Km.jpg)] bg-no-repeat bg-cover p-[50px]'>
                 {/* <div className='flex gap-3 bg-[#2b2b2bc4] p-5 rounded'>
                     <div className='flex flex-col items-center text-center'>
                         {/* Text Here
@@ -452,7 +452,7 @@ const home = () => {
                     {/* Text Here */}
                     <p className='py-5 font-bold text-2xl'>{lang === "En" ? "Recent Listings:" : "Postes récentes:"}</p>
                     {/* <div className='lg:w-1/2 w-full grid lg:grid-cols-2 grid-cols-1 gap-3 lg:h-1/3 h-full lg:gap-12'> */}
-                    <div id='sliderParent' className='w-[90%]'>
+                    <div id='sliderParent' className='2xl:w-[77%] w-[330px] lg:w-auto'>
                         <Slider {...settings}>
                             {
                                 posts ? posts.map(p => (p.what === "house" ? <ListContainer verified={p.verified} hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} verified={p.verified} />)) : <div className='loading'>Loading..</div>
@@ -461,36 +461,39 @@ const home = () => {
                     </div>
                 </div>
             </div>
-            <div className='bg-[skyblue] text-black max-h-[1000px] py-5'>
+            <div className='bg-[skyblue] text-black max-h-[1000px] py-5 hidden lg:flex'>
                 <div className='w-full items-center flex flex-col justify-center bg-whitemoke'>
                     {/* Text Here */}
 
                     <p className='py-5 font-bold text-2xl'>{lang === "En" ? "We're here to help you:" : "Nous sommes là pour vous aider:"}</p>
                     <div className='w-4/6 grid lg:grid-cols-3 md:grid-cols-1 gap-4'>
                         <div className='bg-[white] min-h-[200px] w-auto flex-col flex justify-center projects_hover wow animated'>
-                            <span className='font-bold flex flex-col items-center'>
+                            <span className='font-bold flex flex-col items-center gap-3'>
                                 {/* Text Here */}
                                 {lang === "En" ? "Make A listing" : "Faire une liste"}
                                 <p className='font-normal w-1/2'>
-                                    {lang === "En" ? "Zillow Home Loans can get you pre-approved so youre ready to make an offer quickly when you find the right home." : "Les prêts immobiliers Zillow peuvent vous faire pré-approuver afin que vous soyez prêt à faire une offre rapidement lorsque vous trouvez la bonne maison."}
+                                    {lang === "En" ? "Buja deals can help you find your ideal home so youre ready to make an offer quickly when you find the right home." : "Les prêts immobiliers Zillow peuvent vous faire pré-approuver afin que vous soyez prêt à faire une offre rapidement lorsque vous trouvez la bonne maison."}
                                 </p>
+                                <a href="/form" className='text-blue-500 underline'>Go now!</a>
                             </span>
                         </div>
                         <div className='bg-[white] min-h-[200px] w-auto flex-col flex justify-center projects_hover wow animated'>
-                            <span className='font-bold flex flex-col items-center'>
+                            <span className='font-bold flex flex-col items-center gap-3'>
                                 {/* Text Here */}
                                 {lang === "En" ? "Search Listings" : "Recherche d'annonces"}
                                 <p className='font-normal w-1/2'>
-                                    {lang === "En" ? "No matter what path you take to sell your home, we can help you navigate a successful sale." : "Peu importe le chemin que vous empruntez pour vendre votre maison, nous pouvons vous aider à réussir la vente."}
+                                    {lang === "En" ? "Irrespective of the approach you choose to sell your home, we are here to assist you in achieving a successful sale." : "Peu importe le chemin que vous empruntez pour vendre votre maison, nous pouvons vous aider à réussir la vente."}
                                 </p>
+                                <a href="/listings" className='text-blue-500 underline'>Search now!</a>
                             </span>
                         </div>
                         <div className='bg-[white] min-h-[200px] w-auto flex-col flex justify-center projects_hover wow animated'>
-                            <span className='font-bold flex flex-col items-center'>
+                            <span className='font-bold flex flex-col items-center gap-3'>
                                 {lang === "En" ? "Buy a home today!" : "Achetez une maison aujourd'hui!"}
                                 <p className='font-normal w-1/2'>
-                                    {lang === "En" ? "Were creating a seamless online experience  from shopping on the largest rental network, to applying, to paying rent." : "Nous créons une expérience en ligne transparente depuis les achats sur le plus grand réseau de location, jusqu'à la candidature et le paiement du loyer."}
+                                    {lang === "En" ? "We are crafting a seamless online journey, encompassing everything from browsing the extensive rental network to submitting applications and making rent payments." : "Nous créons une expérience en ligne transparente depuis les achats sur le plus grand réseau de location, jusqu'à la candidature et le paiement du loyer."}
                                 </p>
+                                <a href="/listings" className='text-blue-500 underline'>Search now!</a>
                             </span>
                         </div>
                     </div>

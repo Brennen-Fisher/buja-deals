@@ -5,30 +5,37 @@ import { useQuery } from "@tanstack/react-query";
 import newRequest from '../../utils/newRequest';
 import { useParams } from 'react-router';
 import { LangContext } from '../../context/LangContext';
-
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+library.add(fas, far);
 
 function Listings() {
-
     const { id } = useParams();
+    const params = id?.split("&");
+
     const [posts, setPosts] = useState();
     const [qType, setType] = useState("updatedAt");
     const [qOrder, setOrder] = useState(-1);
-    const [qWhat, setWhat] = useState();
-    const [qSale, setSale] = useState();
+    const [qWhat, setWhat] = useState(params&&params[5] !== "any" ? params[5] : "");
+    const [qSale, setSale] = useState(params&&params[0] !== "any" ? params[0] : "");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(15);
     const [last, setLast] = useState(false);
-    const [qCom, setCom] = useState();
-    const [qZone, setZone] = useState();
-    const [qStyle, setStyle] = useState();
-    const [qMin, setMax] = useState();
-    const [qMax, setMin] = useState();
+    const [qCom, setCom] = useState(params&&params[1] !== "any" ? params[1] : "");
+    const [qZone, setZone] = useState(params&&params[2] !== "any" ? params[2] : "");
+    const [qStyle, setStyle] = useState(params&&params[3] !== "any" ? params[3] : "");
+    const [qMax, setMax] = useState();
+    const [qMin, setMin] = useState();
+    const [drop, setDrop] = useState(true);
 
     const [first, setFirst] = useState(0);
     const { lang } = useContext(LangContext);
 
-    const params = id?.split("&");
     // console.log(params);
+
+
     const { isLoading, error, data, refetch } = useQuery({
         queryKey: ["lists"],
         queryFn: () =>
@@ -38,89 +45,16 @@ function Listings() {
             }),
     });
 
-    /* Old Code
-    const sortListing = async () => {
+    function formatPhoneNumber(str) {
+        //Filter only numbers from the input
+        if (str) {
+            let temp = str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-        let array = [];
-        const q = query(collection(db, "posts"), where('type', '==', qWhat), where('sale', '==', qSale), orderBy(qType, qOrder), limit(12));
-        const querySnapshot = await getDocs(q);
-        // console.log(querySnapshot);
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-            array.push(doc.data());
-        });
-        setLast(false);
-        setFirst(0);
-        try {
-            if ("key" in array[11]) {
-                // console.log("key" in array[4] ? "true" : "false");
-                // console.log("pop");
-                array.pop();
-            }
-        } catch (error) {
-            console.log("empty");
-            setLast(true);
+            return temp;
         }
-        // array = querySnapshot.docs;
-        setFDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        setPosts(array);
+        return null;
     }
 
-    const paginateF = async () => {
-        if (!last) {
-            setPosts([]);
-            let array = [];
-            const q = query(collection(db, "posts"), where('type', '==', qWhat), where('sale', '==', qSale), orderBy(qType, qOrder), startAt(fDoc), limit(12));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
-                array.push(doc.data());
-            });
-            try {
-                if ("key" in array[4]) {
-                    // console.log("key" in array[4] ? "true" : "false");
-                    // console.log("pop");
-                    array.pop();
-
-                }
-            } catch (error) {
-                console.log("empty");
-                setLast(true);
-            }
-            setFirst(first + 1);
-            setBDoc(querySnapshot.docs[0]);
-            setFDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-            setPosts(array);
-        }
-    }
-
-    const paginateB = async () => {
-        if (first !== 0) {
-            setPosts([]);
-            let array = [];
-            const q = query(collection(db, "posts"), where('type', '==', qWhat), where('sale', '==', qSale), orderBy(qType, qOrder), endAt(bDoc), limitToLast(12));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                console.log(doc.id, " => ", doc.data());
-                array.push(doc.data());
-            });
-            try {
-                if ("key" in array[11]) {
-                    // console.log("key" in array[4] ? "true" : "false");
-                    // console.log("pop");
-                    array.pop();
-                    setFirst(first - 1);
-                }
-            } catch (error) {
-                console.log("empty");
-            }
-
-            setLast(false);
-            setBDoc(querySnapshot.docs[0]);
-            setFDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-            setPosts(array);
-        }
-    }*/
     const changeOrder = async (e) => {
         // console.log(e.target.value);
         if (e.target.value == "recent") {
@@ -282,18 +216,6 @@ function Listings() {
     }
 
     useEffect(() => {
-        if (params) {
-            params[0] !== "any" ? setSale(params[0]) : setSale();
-            params[1] !== "any" ? setCom(params[1]) : setCom();
-            params[2] !== "any" ? setZone(params[2]) : setZone();
-            params[3] !== "any" ? setStyle(params[3]) : setStyle();
-            params[4] !== "any" ? setMax(params[4]) : setMax();
-            params[5] !== "any" ? setWhat(params[5]) : setWhat();
-            refetch();
-        }
-    }, []);
-
-    useEffect(() => {
         setPage(1);
         refetch();
     }, [qSale, qWhat, qType, qOrder, qZone, qMin, qMax, qStyle, qCom]);
@@ -304,13 +226,13 @@ function Listings() {
     // console.log(data);
     if (data)
         return (
-            <div className='overflow-x-hidden flex justify-center w-full bg-[skyblue] min-h-[858px]'>
+            <div className='overflow-x-hidden flex justify-center w-full bg-gradient-to-b from-white to-[skyblue] lg:border-t-[2px] bg-cover border-black min-h-[858px] pb-5'>
                 <div>
                     <div className='flex flex-col justify-start'>
-                        <div className='sideBar items-center flex flex-col py-[20px] mr-4 min-[1800px]:items-start'>
+                        <div className='sideBar items-center flex flex-col py-[20px] lg:ml-[22px] mr-4 min-[1800px]:items-start'>
                             <form className='gap-1 lg:flex grid grid-cols-2 lg:flex-row' method='post' id='qForm'>
-                                <div>
-                                    <select onInput={changeWhat} name="sortWhat" id="house">
+                                <div className='drop'>
+                                    <select value={qWhat} onInput={changeWhat} name="sortWhat" id="house">
                                         {/** Text Here */}
                                         <option value="any">Any</option>
                                         <option value="house">{lang === "En" ? "House" : "Maison"}</option>
@@ -318,8 +240,8 @@ function Listings() {
                                     </select>
                                     <label htmlFor="house">{lang === "En" ? "Cars/Houses" : "Voiture/Maison"}</label>
                                 </div>
-                                <div>
-                                    <select onInput={changeSale} name="howBuy" id="how">
+                                <div className='drop'>
+                                    <select value={qSale} onInput={changeSale} name="howBuy" id="how">
                                         {/** Text Here */}
                                         <option value="any">Any</option>
                                         <option value="sale">{lang === "En" ? "Buy" : "Acheter"}</option>
@@ -329,8 +251,8 @@ function Listings() {
                                 </div>
                                 {
                                     qWhat === "house" ? (
-                                        <div>
-                                            <select onInput={changeStyle} id="prop" name="property">
+                                        <div className='drop'>
+                                            <select value={qStyle} onInput={changeStyle} id="prop" name="property">
                                                 <option value="any">Any</option>
                                                 <option value="condo">{lang === "En" ? "Condo" : "condo"}</option>
                                                 <option value="single">{lang === "En" ? "Single Family Home" : "Maison unifamiliale"}</option>
@@ -343,8 +265,8 @@ function Listings() {
                                             <label htmlFor="prop">Propery Type</label>
                                         </div>) : null
                                 }
-                                <div>
-                                    <select onInput={changeZone} name="zone">
+                                <div className='drop'>
+                                    <select value={qZone} onInput={changeZone} name="zone">
                                         <option value="any">Any</option>
                                         <option value="buterere">Buterere</option>
                                         <option value="buyenzi">Buyenzi</option>
@@ -363,8 +285,8 @@ function Listings() {
                                         Zone
                                     </label>
                                 </div>
-                                <div>
-                                    <select onInput={changeComm} name="commune">
+                                <div className='drop'>
+                                    <select value={qCom} onInput={changeComm} name="commune">
                                         <option value="any">Any</option>
                                         <option value="muha">Muha</option>
                                         <option value="mukaza">Mukaza</option>
@@ -374,7 +296,7 @@ function Listings() {
                                         Commune
                                     </label>
                                 </div>
-                                <div>
+                                {/* <div className='drop'>
                                     <select onInput={changeMin} name="price">
                                         <option value="any">Any</option>
                                         <option value="5000">5 000</option>
@@ -389,7 +311,7 @@ function Listings() {
                                         Min Price
                                     </label>
                                 </div>
-                                <div>
+                                <div className='drop'>
                                     <select onInput={changeMax} name="price">
                                         <option value="any">Any</option>
                                         <option value="100000">100 000</option>
@@ -406,11 +328,27 @@ function Listings() {
                                     <label>
                                         Max Price
                                     </label>
+                                </div> */}
+                                <div className='flex flex-col'>
+                                    <div className={drop ? 'flex flex-nowrap bg-white border flex-col min-w-[150px] w-full z-0 pr-2.5 rounded-md border-solid border-[#bdbdbd] h-[70px]' : 'flex flex-nowrap bg-white border flex-col min-w-[150px] w-full z-0 pr-2.5 rounded-md border-solid border-[#bdbdbd]'} onClick={() => setDrop(!drop)}>
+                                        <div className='h-full w-full flex flex-row justify-center items-center gap-3'>
+                                            Price <FontAwesomeIcon icon={['fas', 'chevron-down']} size='2xs' />
+                                        </div>
+                                        {drop ? formatPhoneNumber((new RegExp('^[0-9]+$')).test(qMin) ? qMin : "Any") + " - " + formatPhoneNumber((new RegExp('^[0-9]+$')).test(qMax) ? qMax : "Any") : null}
+                                    </div>
+                                    <div className={drop ? '!hidden' : '!flex h-[100px] w-[150px] absolute translate-y-10 z-10'}>
+                                        <div className='flex bg-white pt-8 pb-10 border flex-col min-w-[150px] w-full p-4 rounded-md border-solid border-[#bdbdbd] justify-center items-center'>
+                                            Min
+                                            <input value={qMin} onChange={(e) => setMin(e.target.value)} type="number" className='w-full border-[1px] border-black' />
+                                            Max
+                                            <input value={qMax} onChange={(e) => setMax(e.target.value)} type="number" className='w-full border-[1px] border-black' />
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
                         <div>
-                            <div className='[&>*]:flex [&>*]:relative' id='title'>
+                            <div className='[&>*]:flex [&>*]:relative lg:ml-[22px]' id='title'>
                                 {/** Text Here */}
                                 <h2 className=''>{lang === "En" ? "Listings" : "Des postes"}</h2>
                                 <h2>{data.count} {lang === "En" ? "total posts" : "nombre total de poste"}</h2>
@@ -430,7 +368,7 @@ function Listings() {
                                     </form>
                                 </div>
                             </div>
-                            <div className='pb-5 min-[1800px]:min-w-[1875px] items-start flex flex-col w-full'>
+                            <div className='pb-5 min-[1800px]:min-w-[1875px] lg:items-center flex flex-col w-full'>
                                 <div className='grid grid-cols-1 lg:grid-cols-3 min-[1800px]:grid-cols-5 h-auto gap-2'>
                                     {data.posts ? data.posts.map((p) => (p.what === "house" ? <ListContainer verified={p.verified} hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} room={p.room} bath={p.bath} m2={p.m2} addy={p.addy} zone={p.zone} commune={p.commune} /> : <ListContainer hover={true} city={p.city} style={p.style} sale={p.sale} what={p.what} id={p._id} image={p.image} price={p.price} addy={p.addy} zone={p.zone} commune={p.commune} make={p.make} model={p.model} year={p.year} mileage={p.mileage} mpg={p.mpg} engine={p.engine} color={p.color} verified={p.verified} />)) : <div className='loading'>Loading..</div>}
                                 </div>

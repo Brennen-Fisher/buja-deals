@@ -116,14 +116,14 @@ function ListContainer(props) {
 
     if (lang == "En")
         return (
-            <div key={props} className={'rounded-t-md bg-white max-w-[325px] lg:max-w-[350px] min-[1800px]:max-w-full lg:max-h-[450px] lg:min-h-[450px] grid grid-rows-[2fr,1fr] projects_hover wow animated'}>
-                <div className='h-auto'>
+            <div key={props} className={'rounded-t-md bg-white max-w-[325px] lg:max-w-[350px] min-[1800px]:max-w-full lg:max-h-[450px] lg:min-h-[450px] grid grid-rows-[2fr,1fr] !p-0 projects_hover wow animated'}>
+                <div className='h-auto overflow-y-hidden max-h-[270px]'>
                     <ImageLoader img={props.image[0]} />
                     <div className='relative w-[99%] flex h-full justify-end'>
-                        <div className='absolute h-full w-full z-9' onClick={() => navigate('/details/' + props.id)}></div>
+                        <div className='absolute h-full w-full z-9 cursor-pointer' onClick={() => navigate('/details/' + props.id)}></div>
                         <div id='ForSale' className='h-full'>
                             <div className='hidden lg:block'>
-                                <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded lg:left-[278px] min-[1800px]:left-[298px]'> For {props.sale}</label>
+                                <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded- lg:left-[278px] min-[1800px]:left-[298px]'> For {props.sale}</label>
                             </div>
                             <div className='relative lg:hidden block h-full'>
                                 <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded translate-x-[-44%]'> For {props.sale}</label>
@@ -148,10 +148,17 @@ function ListContainer(props) {
                                     }
                                 }}>
                                     <div className={btn ? 'flex' : 'hidden'}>
-                                        <FontAwesomeIcon icon={['fas', 'heart']} size='2xl' />
+                                        <FontAwesomeIcon icon={['fas', 'heart']} size='2xl' style={{ color: "#000", }} />
+
                                     </div>
                                     <div className={btn ? 'hidden' : 'flex'}>
-                                        <FontAwesomeIcon icon={['far', 'heart']} size='2xl' />
+                                        <FontAwesomeIcon icon={['far', 'heart']} size='2xl' style={{ color: "#000", }} />
+                                        {/* <FontAwesomeIcon icon="fa-solid fa-heart" style={{color: "#ffffff",}} /> */}
+                                    </div>
+                                    <div className='flex absolute'>
+                                        <div className='flex relative top-[-33px] z-[-1]'>
+                                            <FontAwesomeIcon icon="fa-solid fa-circle" size='2xl' style={{ color: "#ffffff", }} />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -160,15 +167,16 @@ function ListContainer(props) {
                 </div>
                 <div className='overflow-hidden ml-4 flex flex-col justify-center text-left'>
                     {props?.verified ? <div className='flex bg-green-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Verified</p></div> : <div className='flex bg-red-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Not Verified</p></div>}
-                    <a onClick={() => navigate('/details/' + props.id)}>
-                        <h2 className='text-2xl font-medium text-blue-400 hover:underline'>BF {props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{props.sale === "sale" ? "" : "/Mo"}</h2>
-                    </a>
+                    {/* <a onClick={() => navigate('/details/' + props.id)}> */}
+                    <h2 className='text-2xl font-medium'>BF {props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{props.sale === "sale" ? "" : "/Mo"}</h2>
+                    {/* </a> */}
                     <div className='font-medium overflow-hidden max-w-[300px] whitespace-nowrap'>
                         {props.what === "house" ? <h3>{houseRef1.length > 40 ? houseRef1.substring(37) + "..." : houseRef1}</h3> : null}
-                        {props.what === "house" ? <h5>{houseRef2.length > 40 ? houseRef2.substring(37) + "..." : houseRef2}</h5> : null}
+                        {/* {props.what === "house" ? <h5>{houseRef2.length > 40 ? houseRef2.substring(37) + "..." : houseRef2}</h5> : null} */}
                         {props.what === "car" ? <h3>{carRef1.length > 40 ? carRef1.substring(37) + "..." : carRef1}</h3> : null}
                         {props.what === "car" ? <h5>{carRef2.length > 40 ? carRef2.substring(37) + "..." : carRef2}</h5> : null}
-                        <p>{props.addy}, {props.city.charAt(0).toUpperCase() + props.city.slice(1).toLowerCase()}, {props.commune}, {props.zone}</p>
+                        <p className='font-normal'>{props.addy}</p>
+                        <p className='font-normal'>{props.city.charAt(0).toUpperCase() + props.city.slice(1).toLowerCase()}, {props.commune}, {props.zone}</p>
                     </div>
                 </div>
             </div>

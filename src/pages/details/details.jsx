@@ -11,7 +11,7 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import { LangContext } from '../../context/LangContext';
 import { useQuery } from "@tanstack/react-query";
 import newRequest from '../../utils/newRequest';
-import { faVolumeHigh, fas } from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -156,14 +156,10 @@ function Details() {
     let price = data && data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     const [markup, setMarkup] = useState(false);
+    const [markup2, setMarkup2] = useState(false);
     const [show, setShow] = useState(false);
+    const [show2, setShow2] = useState(false);
     const [height, setHeight] = useState(0);
-    const ref = useRef(null);
-
-    useEffect(() => {
-        // ref.current && alert(ref.current.clientHeight);
-        ref.current && setHeight(ref.current.clientHeight);
-    }, [ref]);
 
     // console.log(data?.userId);
     // console.log(user);
@@ -416,18 +412,29 @@ function Details() {
                                             <div>
                                                 <h2 className='font-bold '>{lang === "En" ? "About:" : "À propos:"}</h2>
                                                 <div className='flex font-medium text-[18px] justify-start'>
-                                                    {height >= 100 ? (
-                                                        <div>
-                                                            <p id={show ? "show" : "hide"} ref={ref}>{data && data.desc}</p>
-                                                            <a className='flex text-start text-[20px] font-medium text-blue-400 hover:underline' type='button' onClick={() => { setShow(!show); setMarkup(!markup); }}>{markup ? "Hide" : "Show More"}</a>
-                                                        </div>
-                                                    ) : <p className='flex text-start' ref={ref}>{data && data.desc}</p>}
+                                                    <div>
+                                                        {data && data.desc.length >= 100 ?
+                                                            <div className='text-start'>
+                                                                <p p id={show ? "show" : "hide"}>{show ? data && data.desc : data && data.desc.slice(0, 100)}</p>
+                                                                <a className='flex text-start text-[20px] font-medium text-blue-400 hover:underline' type='button' onClick={() => { setShow(!show); setMarkup(!markup); }}>{markup ? "Hide" : "Show More"}</a>
+                                                            </div>
+                                                            :
+                                                            <p className='text-start' id={"show"}>{data && data.desc}</p>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div>
                                                 <h2 className='font-bold '>Facts:</h2>
                                                 <div className='font-medium text-[18px]'>
-                                                    <p ref={ref}>{data && data.fact}</p>
+                                                    {data && data.desc.length >= 100 ?
+                                                        <div className='text-start'>
+                                                            <p p id={show2 ? "show" : "hide"}>{show2 ? data && data.fact : data && data.fact.slice(0, 100)}</p>
+                                                            <a className='flex text-start text-[20px] font-medium text-blue-400 hover:underline' type='button' onClick={() => { setShow2(!show2); setMarkup2(!markup2); }}>{markup2 ? "Hide" : "Show More"}</a>
+                                                        </div>
+                                                        :
+                                                        <p className='text-start' p id={"show"}>{data && data.fact}</p>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -452,7 +459,7 @@ function Details() {
                         </div>}
                     </div>
                 </div>}
-            </div>
+            </div >
 
         );
     if (data && data.what === "car")
@@ -482,7 +489,7 @@ function Details() {
                                         <div className='flex flex-row w-full justify-between'>
                                             <div className='flex flex-row gap-2'>
                                                 <div className='flex background bg-green-300 p-2 rounded justify-start font-medium text-[18px]'><p>{data.sale === "sale" ? lang === "En" ? "For Sale" : "A Vendre" : lang === "En" ? "For Rent" : "A Louer"}</p></div>
-                                                <div className='flex background bg-green-300 p-2 rounded justify-start font-medium text-[18px]'><p>{data?.verified === true ? "Verified" : "Not Verified"}</p></div>
+                                                {data?.verified ? <div className='flex bg-green-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Verified</p></div> : <div className='flex bg-red-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Not Verified</p></div>}
                                             </div>
                                             <div className='hover:cursor-pointer' onClick={() => {
                                                 setBtn(!btn);
@@ -553,34 +560,44 @@ function Details() {
                                             </span>
                                         </div>
                                         <br />
-                                        {data.phone || data.email || data.name ? (<div><h2>{lang === "En" ? "Contact Info" : "Informations de contact"}</h2>
-                                            <div id='contact'>
-                                                <p>{data.name}: {data.phone ? (<div>{formatPhoneNumber(data.phone)}</div>) : null} {data.email ? (<div>{data.email}</div>) : null}</p>
-                                            </div>
-                                            <br /></div>) : null}
-                                        <h2 className='font-bold'>{lang === "En" ? "Features:" : "Caractéristiques:"}</h2>
-                                        <div className='flex flex-row flex-wrap w-auto gap-2'>
-                                            {data.feat.map((e) =>
-
-                                                <span className='tag'>
-                                                    {e}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <br />
-                                        <h2 className='font-bold '>{lang === "En" ? "About:" : "À propos:"}</h2>
-                                        <div className='font-medium text-[18px]'>
-                                            {height >= 100 ? (
-                                                <div>
-                                                    <p id={show ? "show" : "hide"} ref={ref}>{data && data.desc}</p>
-                                                    <a className='text-[20px] font-medium text-blue-400 hover:underline' type='button' onClick={() => { setShow(!show); setMarkup(!markup); }}>{markup ? "Hide" : "Show More"}</a>
+                                        <div className='[&>div]:flex [&>div]:flex-col [&>div]:items-start flex flex-col gap-5'>
+                                            <div>
+                                                <h2 className='font-bold'>{lang === "En" ? "Features:" : "Caractéristiques:"}</h2>
+                                                <div className='flex flex-row flex-wrap w-auto gap-2'>
+                                                    {data.feat.map((e) =>
+                                                        <span className='tag'>
+                                                            {e}
+                                                        </span>
+                                                    )}
                                                 </div>
-                                            ) : <p ref={ref}>{data && data.desc}</p>}
-                                        </div>
-                                        <div>
-                                            <h2 className='font-bold '>Facts:</h2>
-                                            <div className='font-medium text-[18px]'>
-                                                <p ref={ref}>{data && data.fact}</p>
+                                            </div>
+                                            <div>
+                                                <h2 className='font-bold '>{lang === "En" ? "About:" : "À propos:"}</h2>
+                                                <div className='flex font-medium text-[18px] justify-start'>
+                                                    <div>
+                                                        {data && data.desc.length >= 100 ?
+                                                            <div className='text-start'>
+                                                                <p p id={show ? "show" : "hide"}>{show ? data && data.desc : data && data.desc.slice(0, 100)}</p>
+                                                                <a className='flex text-start text-[20px] font-medium text-blue-400 hover:underline' type='button' onClick={() => { setShow(!show); setMarkup(!markup); }}>{markup ? "Hide" : "Show More"}</a>
+                                                            </div>
+                                                            :
+                                                            <p className='text-start' id={"show"}>{data && data.desc}</p>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h2 className='font-bold '>Facts:</h2>
+                                                <div className='font-medium text-[18px]'>
+                                                    {data && data.desc.length >= 100 ?
+                                                        <div className='text-start'>
+                                                            <p p id={show2 ? "show" : "hide"}>{show2 ? data && data.fact : data && data.fact.slice(0, 100)}</p>
+                                                            <a className='flex text-start text-[20px] font-medium text-blue-400 hover:underline' type='button' onClick={() => { setShow2(!show2); setMarkup2(!markup2); }}>{markup2 ? "Hide" : "Show More"}</a>
+                                                        </div>
+                                                        :
+                                                        <p className='text-start' p id={"show"}>{data && data.fact}</p>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -608,7 +625,7 @@ function Details() {
                                         <div className='flex flex-row w-full justify-between'>
                                             <div className='flex flex-row gap-2'>
                                                 <div className='flex background bg-green-300 p-2 rounded justify-start font-medium text-[18px]'><p>{data.sale === "sale" ? lang === "En" ? "For Sale" : "A Vendre" : lang === "En" ? "For Rent" : "A Louer"}</p></div>
-                                                <div className='flex background bg-green-300 p-2 rounded justify-start font-medium text-[18px]'><p>{data?.verified === true ? "Verified" : "Not Verified"}</p></div>
+                                                {data?.verified ? <div className='flex bg-green-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Verified</p></div> : <div className='flex bg-red-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Not Verified</p></div>}
                                             </div>
                                             <div className='hover:cursor-pointer' onClick={() => {
                                                 setBtn(!btn);

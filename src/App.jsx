@@ -4,6 +4,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Home from "./pages/home/home";
 import Listings from "./pages/listings/listings";
 import About from "./pages/static/about";
+import Contact from "./pages/static/contact";
 import Terms from "./pages/static/terms";
 import Login from "./pages/login/login";
 import Profile from "./pages/profile/profile";
@@ -12,7 +13,6 @@ import Navbar from "./components/navbar/navbar";
 import Footer from "./components/footer/footer";
 import Details from './pages/details/details';
 import Form from './pages/form/form';
-import { LangContext } from './context/LangContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Edit from './pages/edit/edit';
 import HouseEdit from './pages/edit/houseEdit';
@@ -20,15 +20,19 @@ import CarEdit from './pages/edit/carEdit';
 import HouseForm from './pages/form/houseForm';
 import CarForm from './pages/form/carForm';
 import VerifyForm from './pages/contact/verifyForm';
+import { LangContext } from './context/LangContext'
 import { AuthContext } from './context/AuthContext';
+import { OnLogContext } from './context/OnLogContext';
 
 function App() {
   const [lang, setLang] = useState("En");
+  const [onLog, setOnLog] = useState(false);
   const queryClient = new QueryClient();
   const { user } = useContext(AuthContext);
+
   const Layout = () => {
     return (
-      <div className="app min-w-[375px] overflow-x-hidden">
+      <div className="app min-w-[320px] overflow-x-hidden">
         <QueryClientProvider client={queryClient}>
           <div>
             <script src="js/wow.min.js"></script>
@@ -117,14 +121,21 @@ function App() {
           path: "/admin",
           element: <Admin />,
         },
+        {
+          path: "/contact",
+          element: <Contact />,
+        },
       ],
     },
   ]);
 
   return (
-    <LangContext.Provider value={{ lang, setLang }}>
-      <RouterProvider router={router} />
-    </LangContext.Provider>
+    <OnLogContext.Provider value={{ onLog, setOnLog }}>
+      <LangContext.Provider value={{ lang, setLang }}>
+        <RouterProvider router={router} />
+      </LangContext.Provider>
+    </OnLogContext.Provider>
+
   );
 }
 

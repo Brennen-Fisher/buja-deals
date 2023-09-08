@@ -17,7 +17,7 @@ function form() {
     const navigate = useNavigate();
     const { lang } = useContext(LangContext);
     const [what, setwhat] = useState("");
-    
+
     // function SubmissionForm() {
     //     const [what, setwhat] = useState("");
     //     let imageUrl = [];
@@ -603,17 +603,21 @@ function form() {
 
     if (user)
         return (
-            <div className='w-full flex items-center justify-center bg-[#F5F5F5] min-h-[839px]'>
-                {
-                    what === "" ?
-                        (<select name="formSelect" className='w-auto p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600' onChange={(e) => setwhat(e.target.value)}>
-                            <option value="blank">{lang === "En" ? "Please Choose An option!" : "Veuillez choisir une option!"}</option>
-                            <option value="car">{lang === "En" ? "Car" : "Voiture"}</option>
-                            <option value="house">{lang === "En" ? "House" : "Loger"}</option>
-                        </select>) : null
-                }
-                {what === "car" ? navigate("/car-form") : null}
-                {what === "house" ? navigate("/house-form"): null}
+            <div>
+                <div className="h-screen bg-[skyblue] flex items-center justify-center bg-[url(https://as2.ftcdn.net/v2/jpg/02/49/93/23/1000_F_249932347_btE0PbnvfyGZJB4KFBGcc85XuOrq8OQa.jpg)] bg-cover">
+                    <div className="w-6/12 flex min-h-[600px] rounded-[10px] flex-col lg:flex-row">
+                        <div className="flex-1 justify-center items-center flex flex-col gap-[30px] text-[black] p-[10px] lg:p-[50px] bg-white bg-opacity-90 lg:border-r-[1px] lg:border-black">
+                            <h1 className='text-[60px]'>Car Form</h1>
+                            <p>Make a listing for a Car!</p>
+                            <button className='whitespace-nowrap bg-blue-500 p-2 text-white rounded-md' onClick={() => navigate("/car-form")}>Car Form</button>
+                        </div>
+                        <div className="flex-1 justify-center items-center flex flex-col gap-[30px] text-[black] p-[10px] lg:p-[50px] bg-white bg-opacity-90 lg:border-l-[1px] lg:border-black">
+                            <h1 className='text-[60px]'>House Form</h1>
+                            <p>Make a listing for a House!</p>
+                            <button className='whitespace-nowrap bg-blue-500 p-2 text-white rounded-md' onClick={() => navigate("/house-form")}>House Form</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     else {

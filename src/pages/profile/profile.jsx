@@ -136,7 +136,6 @@ export default function Profile() {
                                 <button className='text-blue-700 font-bold border-[1px] rounded-md border-blue-700 p-2'>Verify</button>
                             </div>
                         </div>
-                        <button className='bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={() => { newRequest.post("/auth/logout"); localStorage.clear(); navigate("/home"); location.reload(); }}>Sign Out</button>
                     </div>
                 </div>
             </div>
@@ -186,7 +185,7 @@ export default function Profile() {
         }, [data?.posts]);
 
         return (
-            <div className='flex flex-col-reverse items-center gap-5 pt-5 lg:grid w-full'>
+            <div className='flex flex-col-reverse justify-center items-center gap-5 lg:grid w-full'>
                 <div className='grid grid-cols-1 lg:grid-cols-3 min-[1800px]:grid-cols-4 w-fit gap-2'>
                     {
                         data?.posts.length !== 0 && data ?
@@ -245,12 +244,13 @@ export default function Profile() {
     // {lang === "En" ?"null":"null"}
     if (user)
         return (
-            <div className='flex flex-col w-full lg:flex-col h-full bg-[skyblue] min-h-[700px]'>
-                <div className='flex flex-row justify-center lg:justify-start bg-white py-3 relative top-0 left-0 h-full gap-2 border-t-2 border-black lg:px-48'>
+            <div className='flex flex-col w-full lg:flex-col h-full bg-gradient-to-b from-white to-[skyblue] min-h-[700px]'>
+                <div className='flex flex-col lg:flex-row justify-center lg:justify-start bg-white py-3 relative top-0 left-0 h-full gap-2 border-t-2 border-black lg:px-48'>
                     <button className={(seeItems ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setItems(true); setProfile(false); setListings(false); setAdmin(false); }}>{lang === "En" ? "Your Listings" : "Vos annonces"}</button>
                     <button className={(seeListings ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setListings(true); setItems(false); setProfile(false); setAdmin(false); }}>{lang === "En" ? "Saved Listings" : "Listes enregistrées"}</button>
                     <button className={(seeProfile ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setProfile(true); setItems(false); setListings(false); setAdmin(false); }}>{lang === "En" ? "Account Info" : "Informations de compte"}</button>
-                    {user ? <button className={(seeAdmin ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setAdmin(true); setProfile(false); setItems(false); setListings(false); }}>Admin</button> : null}
+                    <button className='bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded' onClick={() => { newRequest.post("/auth/logout"); localStorage.clear(); navigate("/home"); location.reload(); }}>Sign Out</button>
+                    {user && user.admin ? <button className={(seeAdmin ? ('underline') : ('')) + ' bg-blue-400 hover:underline text-[15px] text-white font-semibold py-2 px-4 rounded'} onClick={() => { setAdmin(true); setProfile(false); setItems(false); setListings(false); }}>Admin</button> : null}
                 </div>
                 <div className='w-full relative flex flex-wrap flex-col box-border lg:px-[75px] max-h-full'>
                     {seeProfile ? <Profile /> : null}
