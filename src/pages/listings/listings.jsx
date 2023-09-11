@@ -358,10 +358,10 @@ function Listings() {
                                         <div>
                                             <select onInput={changeOrder} name="sortBy" id="sort">
                                                 {/** Text Here */}
-                                                <option value="recent">{lang === "En" ? "Recent" : "récent"}</option>
+                                                <option value="recent">{lang === "En" ? "Recent" : "Récent"}</option>
                                                 <option value="low">{lang === "En" ? "Lowest Price" : "Prix le plus bas"}</option>
                                                 <option value="high">{lang === "En" ? "Highest Price" : "Le prix le plus élevé"}</option>
-                                                <option value="verified">Verified</option>
+                                                <option value="verified">{lang === "En" ? "Verified" : "Vérifié"}</option>
                                             </select>
                                             <label htmlFor="sort">{lang === "En" ? "Sort By" : "Trier par"}</label>
                                         </div>
@@ -377,7 +377,7 @@ function Listings() {
                             </div>
                             <div>
                                 {/** Text Here */}
-                                {page - 1 > 0 && page - 1 * limit <= data.count ? <button className='bg-blue-500 hover:underline text-white font-medium py-2 px-4 rounded' type="button" onClick={() => setPage(page - 1)}>{lang === "En" ? "Prev" : "Précédente"}</button> : <button className='cursor-not-allowed bg-zinc-400 text-white font-medium py-2 px-4 rounded'>{lang === "En" ? "Prev" : "Précédente"}</button>}
+                                {page - 1 > 0 && page - 1 * limit <= data.count ? <button className='bg-blue-500 hover:underline text-white font-medium py-2 px-4 rounded' type="button" onClick={() => setPage(page - 1)}>{lang === "En" ? "Prev" : "Précédent"}</button> : <button className='cursor-not-allowed bg-zinc-400 text-white font-medium py-2 px-4 rounded'>{lang === "En" ? "Prev" : "Précédente"}</button>}
                                 <div className='inline-flex gap-3 items-center p-3'>
                                     {page - 3 > 0 && (page - 3) * limit <= data.count ? <p>...</p> : null}
                                     {page - 2 > 0 && page - 2 * limit <= data.count ? <a onClick={() => setPage(page - 2)}>{page - 2}</a> : null}
@@ -387,7 +387,7 @@ function Listings() {
                                     {(page + 1) * limit < data.count ? <a onClick={() => setPage(page + 2)}>{page + 2}</a> : null}
                                     {(page + 2) * limit < data.count ? <p>...</p> : null}
                                 </div>
-                                {page * limit < data.count ? <button className='bg-blue-500 hover:underline text-white font-medium py-2 px-4 rounded' type="button" onClick={() => setPage(page + 1)}>{lang === "En" ? "Next" : "Suivante"}</button> : <button className='cursor-not-allowed bg-zinc-400 text-white font-medium py-2 px-4 rounded'>{lang === "En" ? "Next" : "Suivante"}</button>}
+                                {page * limit < data.count ? <button className='bg-blue-500 hover:underline text-white font-medium py-2 px-4 rounded' type="button" onClick={() => setPage(page + 1)}>{lang === "En" ? "Next" : "Suivant"}</button> : <button className='cursor-not-allowed bg-zinc-400 text-white font-medium py-2 px-4 rounded'>{lang === "En" ? "Next" : "Suivante"}</button>}
                             </div>
                         </div>
                     </div>

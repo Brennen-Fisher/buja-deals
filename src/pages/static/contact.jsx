@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import emailjs from '@emailjs/browser';
+import { LangContext } from '../../context/LangContext';
 
 function contact() {
     const [sent, setSent] = useState(false);
     const form = useRef();
+    const { lang } = useContext(LangContext);
 
 
     function sendEmail(e) {
@@ -40,9 +42,9 @@ function contact() {
             <div className='flex flex-col lg:flex-row w-full h-full lg:h-[650px] items-center justify-center gap-10 '>
                 <div className='flex flex-col w-[90%] lg:max-w-[20%] h-full gap-10 justify-start text-start'>
                     <div className='bg-white rounded h-fit p-5 mt-[50px]'>
-                        <h1 className='text-[48px] font-bold pb-[10px]'>Contact Us</h1>
+                        <h1 className='text-[48px] font-bold pb-[10px]'>{lang === "En" ? "Contact Us" : null}</h1>
                         <p className='flex text-[18px] text-wrap w-full'>
-                            If you would like to inquire about our services, please dont hesitate to contact us. We are here to answer all your questions and concerns in order to provide the best service. Call us today!
+                            {lang === "En" ? "If you would like to inquire about our services, please dont hesitate to contact us. We are here to answer all your questions and concerns in order to provide the best service. Call us today!" : "Veuillez nous envoyer vos coordonnées et nous vous répondrons dans les plus brefs délais!"}
                         </p>
                     </div>
                 </div>

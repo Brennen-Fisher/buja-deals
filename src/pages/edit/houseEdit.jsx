@@ -213,7 +213,7 @@ function HouseEdit() {
                         <h1 className='text-2xl font-bold'>{lang === "En" ? "Change your listing" : "Modifiez votre annonce"}</h1>
                         <div id='basic' className='pt-10 w-full flex flex-col items-center gap-[50px]'>
                             <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Basic Info" : "Informations de base"}</h2>
-                            <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                            <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                                 <label className='flex flex-col items-start'>
                                     {lang === "En" ? "Change Price:" : "Change le prix:"}
                                     <input value={price} required onChange={(e) => setPrice(e.target.value)} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='price' type="number" />
@@ -248,7 +248,7 @@ function HouseEdit() {
                         </div>
                         <div id='size' className='w-full flex flex-col items-center gap-[50px]'>
                             <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Change Size" : "Changer la taille"}</h2>
-                            <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                            <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                                 <label className='flex flex-col items-start'>
                                     {lang === "En" ? "Change Number of Baths:" : "Changer le nombre de bains:"}
                                     <input value={bath} onChange={(e) => setBath(e.target.value)} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='bath' type="number" required />
@@ -269,7 +269,7 @@ function HouseEdit() {
                         </div>
                         <div id='location' className='w-full flex flex-col items-center gap-[50px]'>
                             <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Change Location" : "Changer de lieu"}</h2>
-                            <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                            <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                                 <label className='flex flex-col items-start'>
                                     {lang === "En" ? "Change Address:" : "Changement d'adresse:"}
                                     <textarea value={addy} onChange={(e) => setAddy(e.target.value)} name='addy' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
@@ -397,7 +397,7 @@ function HouseEdit() {
                         </div>
                         <div id='additional' className='w-full flex flex-col items-center gap-[50px]'>
                             <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Additional Information" : "Informations Complémentaires"}</h2>
-                            <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                            <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                                 <label className='flex flex-col items-start'>
                                     {lang === "En" ? "Change Description:" : "Changer la description:"}
                                     <textarea value={desc} onChange={(e) => setDesc(e.target.value)} name='desc' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder='Give a short Description'></textarea>

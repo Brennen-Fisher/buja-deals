@@ -23,6 +23,7 @@ import VerifyForm from './pages/contact/verifyForm';
 import { LangContext } from './context/LangContext'
 import { AuthContext } from './context/AuthContext';
 import { OnLogContext } from './context/OnLogContext';
+import CookieConsent from "react-cookie-consent";
 
 function App() {
   const [lang, setLang] = useState("En");
@@ -46,6 +47,16 @@ function App() {
           <Navbar />
           <Outlet />
           <Footer />
+          <CookieConsent
+            location="bottom"
+            buttonText="Accept"
+            cookieName="myCookieConsentCookie"
+            style={{ background: "#333" }}
+            buttonStyle={{ color: "#fff", backgroundColor: "#4CAF50" }}
+            expires={150}
+          >
+            This website uses cookies to enhance the user experience.
+          </CookieConsent>
         </QueryClientProvider>
         {/* <Footer /> */}
       </div>

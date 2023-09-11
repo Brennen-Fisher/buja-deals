@@ -607,13 +607,13 @@ function form() {
                 <div className="h-screen bg-[skyblue] flex items-center justify-center bg-[url(https://as2.ftcdn.net/v2/jpg/02/49/93/23/1000_F_249932347_btE0PbnvfyGZJB4KFBGcc85XuOrq8OQa.jpg)] bg-cover">
                     <div className="w-6/12 flex min-h-[600px] rounded-[10px] flex-col lg:flex-row">
                         <div className="flex-1 justify-center items-center flex flex-col gap-[30px] text-[black] p-[10px] lg:p-[50px] bg-white bg-opacity-90 lg:border-r-[1px] lg:border-black">
-                            <h1 className='text-[60px]'>Car Form</h1>
-                            <p>Make a listing for a Car!</p>
+                            <h1 className='text-[60px]'>{lang==="En" ? "Car Form" : "Formulaire de voiture"}</h1>
+                            <p>{lang === "En" ? "Make a listing for a Car!" : "Créez une annonce pour une voiture!"}</p>
                             <button className='whitespace-nowrap bg-blue-500 p-2 text-white rounded-md' onClick={() => navigate("/car-form")}>Car Form</button>
                         </div>
                         <div className="flex-1 justify-center items-center flex flex-col gap-[30px] text-[black] p-[10px] lg:p-[50px] bg-white bg-opacity-90 lg:border-l-[1px] lg:border-black">
-                            <h1 className='text-[60px]'>House Form</h1>
-                            <p>Make a listing for a House!</p>
+                            <h1 className='text-[60px]'>{lang==="En" ? "House Form" : "Formulaire de maison"}</h1>
+                            <p>{lang === "En" ? "Make a listing for a house!" : "Créez une annonce pour une maison!"}</p>
                             <button className='whitespace-nowrap bg-blue-500 p-2 text-white rounded-md' onClick={() => navigate("/house-form")}>House Form</button>
                         </div>
                     </div>

@@ -166,7 +166,7 @@ function ListContainer(props) {
                     </div>
                 </div>
                 <div className='overflow-hidden ml-4 flex flex-col justify-center text-left'>
-                    {props?.verified ? <div className='flex bg-green-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Verified</p></div> : <div className='flex bg-red-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Not Verified</p></div>}
+                    {props?.verified ? <div className='flex bg-green-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>{lang === "En" ? "Verified" : "Vérifié"}</p></div> : <div className='flex bg-red-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>{lang === "En" ? "Not Verified" : "Non vérifié"}</p></div>}
                     {/* <a onClick={() => navigate('/details/' + props.id)}> */}
                     <h2 className='text-2xl font-medium'>BF {props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{props.sale === "sale" ? "" : "/Mo"}</h2>
                     {/* </a> */}
@@ -182,29 +182,72 @@ function ListContainer(props) {
             </div>
         );
     else if (lang === "Fr")
-        return (
-            <div key={props} className='bg-white max-h-[450px] w-fit max-w-200px grid grid-rows-[2fr,1fr] projects_hover wow animated'>
-                <div className=''>
-                    {/* <img src={props.image[props.image.length-1]}/> */}
-                    <ImageLoader img={props.image[props.image.length - 1]} />
-                </div>
-                <div className='overflow-hidden ml-4 flex flex-col justify-center text-left'>
-                    <a href={'details/' + props.id}>
-                        <h2 className='text-2xl font-medium text-blue-400 hover:underline'>{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} FBu {props.sale === "sale" ? "" : "/Mo"}</h2>
-                    </a>
-                    <div className='font-medium overflow-hidden max-w-[300px] whitespace-nowrap'>
-                        {props.what === "house" ? <h3>{houseRef1f.length > 40 ? houseRef1f.substring(37) + "..." : houseRef1f}</h3> : null}
-                        {props.what === "house" ? <h5>{houseRef2f.length > 40 ? houseRef2f.substring(37) + "..." : houseRef2f}</h5> : null}
-                        {props.what === "car" ? <h3>{carRef1f.length > 40 ? carRef1f.substring(37) + "..." : carRef1f}</h3> : null}
-                        {props.what === "car" ? <h5>{carRef2f.length > 40 ? carRef2f.substring(37) + "..." : carRef2f}</h5> : null}
-                        <p>{props.addy}, {props.city.charAt(0).toUpperCase() + props.city.slice(1).toLowerCase()}, {props.country}</p>
+    return (
+        <div key={props} className={'rounded-t-md bg-white max-w-[325px] lg:max-w-[350px] min-[1800px]:max-w-full lg:max-h-[450px] lg:min-h-[450px] grid grid-rows-[2fr,1fr] !p-0 projects_hover wow animated'}>
+            <div className='h-auto overflow-y-hidden max-h-[270px]'>
+                <ImageLoader img={props.image[0]} />
+                <div className='relative w-[99%] flex h-full justify-end'>
+                    <div className='absolute h-full w-full z-9 cursor-pointer' onClick={() => navigate('/details/' + props.id)}></div>
+                    <div id='ForSale' className='h-full'>
+                        <div className='hidden lg:block'>
+                            <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded- lg:left-[278px] min-[1800px]:left-[291px]'>{props.sale === "sale"? "à vendre" : "a louer"}</label>
+                        </div>
+                        <div className='relative lg:hidden block h-full'>
+                            <label className='bg-green-300 absolute p-1 h-fit whitespace-nowrap rounded translate-x-[-44%]'>{props.sale === "sale"? "à vendre" : "a louer"}</label>
+                        </div>
+                    </div>
+                    <div className='flex h-full items-end lg:translate-y-[-13%] z-10 min-[1800px]:translate-y-[-8%]'>
+                        <div>
+                            <div className='hover:cursor-pointer' onClick={() => {
+                                if (user) {
+                                    if (btn)
+                                        setBtn(false);
+                                    else
+                                        setBtn(true);
+                                    if (!btn) {
+                                        saveListing();
+                                    } else {
+                                        deleteListing();
+                                    }
+                                }
+                                else {
+                                    alert("Please make an account");
+                                }
+                            }}>
+                                <div className={btn ? 'flex' : 'hidden'}>
+                                    <FontAwesomeIcon icon={['fas', 'heart']} size='2xl' style={{ color: "#000", }} />
+
+                                </div>
+                                <div className={btn ? 'hidden' : 'flex'}>
+                                    <FontAwesomeIcon icon={['far', 'heart']} size='2xl' style={{ color: "#000", }} />
+                                    {/* <FontAwesomeIcon icon="fa-solid fa-heart" style={{color: "#ffffff",}} /> */}
+                                </div>
+                                <div className='flex absolute'>
+                                    <div className='flex relative top-[-33px] z-[-1]'>
+                                        <FontAwesomeIcon icon="fa-solid fa-circle" size='2xl' style={{ color: "#ffffff", }} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div id='verifiedStatus'>
-                    {/* <h2>Verified</h2> */}
+            </div>
+            <div className='overflow-hidden ml-4 flex flex-col justify-center text-left'>
+                {props?.verified ? <div className='flex bg-green-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Vérifié</p></div> : <div className='flex bg-red-300 p-2 rounded w-fit justify-start font-medium text-[15px]'><p>Non vérifié</p></div>}
+                {/* <a onClick={() => navigate('/details/' + props.id)}> */}
+                <h2 className='text-2xl font-medium'>{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} FBu {props.sale === "sale" ? "" : "/Mo"}</h2>
+                {/* </a> */}
+                <div className='font-medium overflow-hidden max-w-[300px] whitespace-nowrap'>
+                    {props.what === "house" ? <h3>{houseRef1f.length > 40 ? houseRef1f.substring(37) + "..." : houseRef1f}</h3> : null}
+                    {/* {props.what === "house" ? <h5>{houseRef2.length > 40 ? houseRef2.substring(37) + "..." : houseRef2}</h5> : null} */}
+                    {props.what === "car" ? <h3>{carRef1f.length > 40 ? carRef1f.substring(37) + "..." : carRef1f}</h3> : null}
+                    {props.what === "car" ? <h5>{carRef2f.length > 40 ? carRef2f.substring(37) + "..." : carRef2f}</h5> : null}
+                    <p className='font-normal'>{props.addy}</p>
+                    <p className='font-normal'>{props.city.charAt(0).toUpperCase() + props.city.slice(1).toLowerCase()}, {props.commune}, {props.zone}</p>
                 </div>
             </div>
-        );
+        </div>
+    );
 }
 
 

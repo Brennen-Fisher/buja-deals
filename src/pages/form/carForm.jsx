@@ -170,9 +170,9 @@ function CarForm() {
                     <h1 className='text-2xl font-bold'>{lang === "En" ? "Add a new Car" : "Ajouter une nouvelle voiture"}</h1>
                     <div id='basic' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium w-1/4' >{lang === "En" ? "Basic Info" : "Informations de base"}</h2>
-                        <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Enter Price:" : "Entreprise:"}
+                                {lang === "En" ? "Enter Price:" : "Entrez le prix:"}
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='price' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
@@ -180,7 +180,7 @@ function CarForm() {
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='year' type="number" maxlength="4" required />
                             </label>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Enter Make:" : "Entrez Make:"}
+                                {lang === "En" ? "Enter Make:" : "Entrez la marque:"}
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='make' type="text" required />
                             </label>
                             <label className='flex flex-col items-start'>
@@ -192,7 +192,7 @@ function CarForm() {
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='mileage' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Enter Miles per Gallon:" : "Entrez des kilomètres par gallon:"}
+                                {lang === "En" ? "Enter Miles per Gallon:" : "Entrez les kilometre par litre:"}
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='mpg' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
@@ -211,20 +211,20 @@ function CarForm() {
                     </div>
                     <div id='size' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium w-1/4'>{lang === "En" ? "Specific Info" : "Informations spécifiques"}</h2>
-                        <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Engine Size:" : "Entrez la taille du moteur:"}
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='engine' type="text" required />
                             </label>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Year of Registration:" : "Année d'inscription:"}
+                                {lang === "En" ? "Year of Registration:" : "Année d'immatriculation:"}
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='yor' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Manual or Automatic:" : "Manuel ou automatique:"}
+                                {lang === "En" ? "Manual or Automatic:" : "Manuelle ou Automatique:"}
                                 <select className="w-full p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600" name="style" id="style">
                                     <option value="blank"> </option>
-                                    <option value="Manual">{lang === "En" ? "Manual" : "Manuel"}</option>
+                                    <option value="Manual">{lang === "En" ? "Manual" : "Manuelle"}</option>
                                     <option value="Automatic">{lang === "En" ? "Automatic" : "Automatique"}</option>
                                 </select>
                             </label>
@@ -232,7 +232,7 @@ function CarForm() {
                     </div>
                     <div id='location' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Enter Location" : "Entrer l'emplacement"}</h2>
-                        <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Address:" : "Entrer l'adresse:"}
                                 <textarea name='addy' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
@@ -291,7 +291,7 @@ function CarForm() {
                                             <button type='button' onClick={() => {
                                                 setFiles(files.filter(item => item !== p))
                                             }}>
-                                                Delete
+                                                {lang === "En" ? "Delete" : "Supprimer"}
                                             </button>
                                         </div>))
                                     }
@@ -301,58 +301,58 @@ function CarForm() {
                     </div>
                     <div id='tags' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >Tags</h2>
-                        <p>Press Enter to make seperate tags!</p>
                         <div className='gap-[20px] pb-14 flex flex-col items-center'>
                             <div className='flex flex-row flex-wrap max-w-[300px] gap-2'>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>Heating</h1>
+                                        <h1>{lang === "En" ? "Heating" : "Chauffage"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Heating"></input>
                                     </div>
                                 </div>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>Cooling</h1>
+                                        <h1>{lang === "En" ? "Cooling" : "Refroidissement"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Cooling"></input>
                                     </div>
                                 </div>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>Smart Radio</h1>
+                                        <h1>{lang === "En" ? "Smart Radio" : "Radio intelligente"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Smart Radio"></input>
                                     </div>
                                 </div>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>Usb Port</h1>
+                                        <h1>{lang === "En" ? "Usb Port" : "Port USB"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Usb Port"></input>
                                     </div>
                                 </div>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>Parking Assistance</h1>
+                                        <h1>{lang === "En" ? "Parking Assistance" : "Assistance au stationnement"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Parking Assistance"></input>
                                     </div>
                                 </div>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>New</h1>
+                                        <h1>{lang === "En" ? "New" : "Neuf"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="New"></input>
                                     </div>
                                 </div>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>Used</h1>
+                                        <h1>{lang === "En" ? "Used" : "D'occasion"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Used"></input>
                                     </div>
                                 </div>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
                                     <div className='flex flex-row items-center gap-2'>
-                                        <h1>Driving Assistance</h1>
+                                        <h1>{lang === "En" ? "Driving Assistance" : "Assistance à la conduite"}</h1>
                                         <input className='h-fit w-fit' type="checkbox" onClick={handleClick} name='check' value="Driving Assistance"></input>
                                     </div>
                                 </div>
                             </div>
+                            <p>{lang === "En" ? "Press Enter to make a custom tags!" : "Appuyez sur Entrée pour créer des étiquettes séparées!"}</p>
                             <label className='flex flex-col items-start'>
                                 <TagsInput />
                             </label>
@@ -360,13 +360,13 @@ function CarForm() {
                     </div>
                     <div id='additional' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium w-1/4'>{lang === "En" ? "Additional Information" : "Informations Complémentaires"}</h2>
-                        <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Enter Description:" : "Entrez Description:"}
+                                {lang === "En" ? "Enter Description:" : "Entrez une description:"}
                                 <textarea name='desc' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder='Give a short Description'></textarea>
                             </label>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Enter Facts:" : "Entrez les faits:"}
+                                {lang === "En" ? "Enter Facts:" : "Entrez des faits:"}
                                 <textarea name='fact' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder='Optional'></textarea>
                             </label>
                         </div>

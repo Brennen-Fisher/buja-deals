@@ -174,9 +174,9 @@ function HouseForm() {
                     <h1 className='text-2xl font-bold'>{lang === "En" ? "Add a new home" : "Ajouter une nouvelle maison"}</h1>
                     <div id='basic' className='pt-10 w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Basic Info" : "Informations de base"}</h2>
-                        <div className='grid grid-cols-2 gap-[20px] w-[75%] pb-14'>
+                        <div className='grid grid-cols-1 lg:grid-cols-2 gap-[20px] w-[75%] pb-14'>
                             <label className='flex flex-col items-start'>
-                                {lang === "En" ? "Enter Price:" : "Entreprise:"}
+                                {lang === "En" ? "Enter Price:" : "Entrez le prix:"}
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='price' type="number" required />
                             </label>
                             <label className='flex flex-col items-start'>
@@ -209,7 +209,7 @@ function HouseForm() {
                     </div>
                     <div id='size' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Enter Size" : "Entrer la taille"}</h2>
-                        <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Number of Baths:" : "Entrez le nombre de bains:"}
                                 <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' name='bath' type="number" required />
@@ -230,7 +230,7 @@ function HouseForm() {
                     </div>
                     <div id='location' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >{lang === "En" ? "Enter Location" : "Entrer l'emplacement"}</h2>
-                        <div className='w-[75%] grid grid-cols-2 gap-[20px] pb-14'>
+                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Address:" : "Entrer l'adresse:"}
                                 <textarea name='addy' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></textarea>
@@ -299,7 +299,6 @@ function HouseForm() {
                     </div>
                     <div id='tags' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium' >Tags</h2>
-                        <p>Press Enter to make seperate tags!</p>
                         <div className='gap-[20px] pb-14 flex flex-col items-center'>
                             <div className='flex flex-row flex-wrap max-w-[300px] gap-2'>
                                 <div className='bg-[skyblue] text-black  font-medium py-2 px-2 rounded hover:underline' >
@@ -351,6 +350,7 @@ function HouseForm() {
                                     </div>
                                 </div>
                             </div>
+                            <p>Press Enter to make a custom tags!</p>
                             <label className='flex flex-col items-start'>
                                 <TagsInput />
                             </label>
@@ -358,7 +358,7 @@ function HouseForm() {
                     </div>
                     <div id='additional' className='w-full flex flex-col items-center gap-[25px]'>
                         <h2 className='whitespace-nowrap text-[20px] font-medium ' >{lang === "En" ? "Additional Information" : "Informations Complémentaires"}</h2>
-                        <div className='w-[75%] grid grid-cols-2 gap-[25px] lg:gap-[20px] pb-14'>
+                        <div className='w-[75%] grid grid-cols-1 lg:grid-cols-2 gap-[25px] lg:gap-[20px] pb-14'>
                             <label className='flex flex-col items-start'>
                                 {lang === "En" ? "Enter Description:" : "Entrez Description:"}
                                 <textarea name='desc' className="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder='Give a short Description'></textarea>

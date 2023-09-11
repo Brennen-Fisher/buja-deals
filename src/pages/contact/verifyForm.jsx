@@ -35,14 +35,16 @@ function VerifyForm() {
             });
         e.target.reset();
     }
-    
+
     if (user)
         return (
             <div className='bg-[skyblue] w-full flex justify-center items-center flex-col lg:p-5 min-h-[800px]'>
                 <form onSubmit={sendEmail} ref={form} className='bg-white rounded-md flex flex-col items-center gap-[10px] w-full lg:w-[50%] py-10 p-3'>
                     <h1 className='text-2xl font-bold'>Verify Your Listing</h1>
                     <div id='basic' className='pt-10 w-full flex flex-col items-center gap-[25px]'>
-                        <h2 className='whitespace text-[20px] font-medium' >Verifying a listing lets people know you're trusted! We have a short verification process <br /> Youll need to send X amount to X number <br /> then fill out the form below and we will get in contact with you when available!</h2>
+                        {lang === "En" ? <h2 className='whitespace text-[20px] font-medium' >Verifying a listing lets people know you're trusted! We have a short verification process <br /> Youll need to send X amount to X number <br /> then fill out the form below and we will get in contact with you when available!</h2> :
+                            <h2 className='whitespace text-[20px] font-medium' >La vérification d'une annonce permet aux gens de savoir que vous avez confiance! Nous avons un court processus de vérification <br/> Vous devrez envoyer un montant de 45000 Fbu au numéro 61 865050 <br/> alors remplissez le formulaire ci-dessous et nous vous contacterons dès que disponible!
+                            </h2>}
                         <div className='grid grid-cols-1 gap-[20px] w-[50%] pb-14'>
                             <input className='hidden' name='param' value={id}></input>
                             <label className='flex flex-col items-start'>

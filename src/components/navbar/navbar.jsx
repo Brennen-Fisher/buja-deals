@@ -90,7 +90,7 @@ export default function navbar() {
         </div>
       </div>
 
-      <div className='w-full'>
+      <div className='w-full lg:flex hidden'>
         <div className={onLog ? 'absolute left-[44%] top-[150px] opacity-0 suc-close' : 'hidden'}>
           <div className='w-[200px] bg-green-400 px-10 py-4 rounded flex justify-center'>
             Logged In!
@@ -98,7 +98,7 @@ export default function navbar() {
         </div>
         <div className={'bg-white lg:flex flex-row items-center justify-between px-48 w-full h-[90px] hidden'}>
           <div className='flex flex-row h-full items-center gap-5'>
-            <a href={"/home"} onClick={() => location.reload}><span className='text-2xl font-bold'><img className='max-w-[250px] mb-[-20px]' src={logo} /></span></a>
+            <a onClick={() => navigate("/home")}><span className='text-2xl font-bold'><img className='max-w-[250px] mb-[-20px]' src={logo} /></span></a>
             <div className='flex flex-row h-full items-center font-medium text-[17px] [&>div]:h-full [&>div]:flex [&>div]:items-center [&>div]:px-3'>
               <div className='hover:bg-blue-100'>
                 <NavLink
@@ -106,9 +106,8 @@ export default function navbar() {
                   className={({ isActive, isPending }) =>
                     isPending ? "pending" : isActive ? "active" : ""
                   }
-                  onClick={location.reload}
                 >
-                  <label className='cursor-pointer'>Home</label>
+                  <label className='cursor-pointer'>{lang === "En" ? "Home" : "Accueil"}</label>
                 </NavLink>
               </div>
               <div className='hover:bg-blue-100'>
@@ -118,7 +117,7 @@ export default function navbar() {
                     isPending ? "pending" : isActive ? "active" : ""
                   }
                 >
-                  <label className='cursor-pointer'>Listings</label>
+                  <label className='cursor-pointer'>{lang === "En" ? "Listings" : "Annonces"}</label>
                 </NavLink>
               </div>
               {/* <NavLink
@@ -148,7 +147,7 @@ export default function navbar() {
               {/* <button className='bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={togglePop}>Login</button>*/}
               {seen ? <Login toggle={togglePop} /> : null}
             </div>
-            <button className='whitespace-nowrap bg-blue-500 p-2 text-white rounded-md' onClick={() => navigate("/form")}>Submit Listing</button>
+            <button className='whitespace-nowrap bg-blue-500 p-2 text-white rounded-md' onClick={() => navigate("/form")}>{ lang==="En" ? "Submit Listing" : "Soumettre l'annonce"}</button>
           </div>
         </div >
       </div>

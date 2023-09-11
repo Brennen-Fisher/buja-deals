@@ -129,7 +129,7 @@ const home = () => {
     // console.log(data);
 
     // useEffect(() => {
-        
+
     // }, [])
 
     useEffect(() => {
@@ -186,9 +186,9 @@ const home = () => {
             <div className='w-full flex justify-center bg-[whitesmoke]'>
                 <div className='z-[1] mt-[-90px]'>
                     <div name="tab" className='flex justify-center gap-1'>
-                        <button className={("p-3 rounded-t-md " + (tab1 ? "bg-[skyblue]" : "bg-white"))} name="tablinks" type='button' onClick={() => { setTab1(true); setTab2(false); setTab3(false); }}>Search All</button>
-                        <button className={("p-3 rounded-t-md " + (tab2 ? "bg-[skyblue]" : "bg-white"))} name="tablinks" type='button' onClick={() => { setTab1(false); setTab2(true); setTab3(false); }}>Search Houses</button>
-                        <button className={("p-3 rounded-t-md " + (tab3 ? "bg-[skyblue]" : "bg-white"))} name="tablinks" type='button' onClick={() => { setTab1(false); setTab2(false); setTab3(true); }}>Search Cars</button>
+                        <button className={("p-3 rounded-t-md " + (tab1 ? "bg-[skyblue]" : "bg-white"))} name="tablinks" type='button' onClick={() => { setTab1(true); setTab2(false); setTab3(false); }}>{lang === "En" ? "Search All" : "Rechercher tout"}</button>
+                        <button className={("p-3 rounded-t-md " + (tab2 ? "bg-[skyblue]" : "bg-white"))} name="tablinks" type='button' onClick={() => { setTab1(false); setTab2(true); setTab3(false); }}>{lang === "En" ? "Search Houses" : "Rechercher des maisons"}</button>
+                        <button className={("p-3 rounded-t-md " + (tab3 ? "bg-[skyblue]" : "bg-white"))} name="tablinks" type='button' onClick={() => { setTab1(false); setTab2(false); setTab3(true); }}>{lang === "En" ? "Search Cars" : "Rechercher des voitures"}</button>
                     </div>
                     <div className='flex justify-center p-5 px-20 bg-[skyblue] w-full shadow-lg rounded-md'>
 
@@ -199,12 +199,12 @@ const home = () => {
                                         <span className='grid grid-cols-2 lg:flex [&>div]:items-center lg:flex-row gap-x-3'>
                                             <div className='flex flex-col  w-full whitespace-nowrap'>
                                                 <label>
-                                                    Sale or Rent?
+                                                    {lang === "En" ? "Sale or Rent?" : "Vente ou location"}
                                                 </label>
                                                 <select name="sale" className="w-fit p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600">
                                                     <option value="any">Any</option>
-                                                    <option value="sale">For Sale</option>
-                                                    <option value="rent">For Rent</option>
+                                                    <option value="sale">{lang === "En" ? "For Sale" : "À vendre"}</option>
+                                                    <option value="rent">{lang === "En" ? "For Rent" : "A louer"}</option>
                                                 </select>
                                             </div>
                                             <div className='flex flex-col  w-full whitespace-nowrap'>
@@ -262,7 +262,7 @@ const home = () => {
                                         </span>
                                         <span className='flex flex-col items-center w-full whitespace-nowrap'>
                                             <label>
-                                                Propery Type
+                                                {lang === "En" ? "Propery Type" : "Type de propriété"}
                                             </label>
                                             <select name="property" className="w-fit p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600">
                                                 <option value="any">Any</option>
@@ -276,7 +276,7 @@ const home = () => {
                                             </select>
                                         </span>
                                     </div>
-                                    <button value={"any"} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' type="submit">Search</button>
+                                    <button value={"any"} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' type="submit">{lang === "En" ? "Search" : "Recherche"}</button>
                                 </div>
                             </form>
                         </div>
@@ -288,12 +288,12 @@ const home = () => {
                                         <span className='grid grid-cols-2 lg:flex [&>div]:items-center lg:flex-row gap-x-3'>
                                             <div className='flex flex-col  w-full whitespace-nowrap'>
                                                 <label>
-                                                    Sale or Rent?
+                                                    {lang === "En" ? "Sale or Rent?" : "Vente ou location"}
                                                 </label>
                                                 <select name="sale" className="w-fit p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600">
                                                     <option value="any">Any</option>
-                                                    <option value="sale">For Sale</option>
-                                                    <option value="rent">For Rent</option>
+                                                    <option value="sale">{lang === "En" ? "For Sale" : "À vendre"}</option>
+                                                    <option value="rent">{lang === "En" ? "For Rent" : "A louer"}</option>
                                                 </select>
                                             </div>
                                             <div className='flex flex-col  w-full whitespace-nowrap'>
@@ -377,12 +377,12 @@ const home = () => {
                                         <span className='grid grid-cols-2 lg:flex [&>div]:items-center lg:flex-row gap-x-3'>
                                             <div className='flex flex-col  w-full whitespace-nowrap'>
                                                 <label>
-                                                    Sale or Rent?
+                                                    {lang === "En" ? "Sale or Rent?" : "Vente ou location"}
                                                 </label>
                                                 <select name="sale" className="w-fit p-2.5 bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600">
                                                     <option value="any">Any</option>
-                                                    <option value="sale">For Sale</option>
-                                                    <option value="rent">For Rent</option>
+                                                    <option value="sale">{lang === "En" ? "For Sale" : "À vendre"}</option>
+                                                    <option value="rent">{lang === "En" ? "For Rent" : "A louer"}</option>
                                                 </select>
                                             </div>
                                             <div className='flex flex-col  w-full whitespace-nowrap'>
@@ -474,7 +474,7 @@ const home = () => {
                                 <p className='font-normal w-1/2'>
                                     {lang === "En" ? "Buja deals can help you find your ideal home so youre ready to make an offer quickly when you find the right home." : "Les prêts immobiliers Zillow peuvent vous faire pré-approuver afin que vous soyez prêt à faire une offre rapidement lorsque vous trouvez la bonne maison."}
                                 </p>
-                                <a href="/form" className='text-blue-500 underline'>Go now!</a>
+                                <a href="/form" className='text-blue-500 underline'>{lang === "En" ? "Go now!" : "Aller!"}</a>
                             </span>
                         </div>
                         <div className='bg-[white] min-h-[200px] w-auto flex-col flex justify-center projects_hover wow animated'>
